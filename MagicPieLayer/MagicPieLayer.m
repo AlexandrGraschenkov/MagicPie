@@ -75,6 +75,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
     BOOL hasChanges;
 @public
     float titleAlpha;
+    int retainCount;
 }
 
 - (id)init
@@ -180,7 +181,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 
 - (void)prepareDelayedChangeNotification
 {
-    if(hasChanges)
+    if(hasChanges || retainCount <= 0)
         return;
     MagicPieElement* copyElement = [self copy];
     hasChanges = YES;
@@ -259,6 +260,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 {
     NSAssert2(array.count == indexes.count, @"Array sizes must be equal: values.count = %d; indexes.count = %d;", array.count, indexes.count);
     for(MagicPieElement* elem in array){
+        elem->retainCount++;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pieElementUpdated:) name:pieElementChangedNotificationIdentifier object:elem];
     }
     
@@ -339,6 +341,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 - (void)deleteValues:(NSArray *)valuesToDelete animated:(BOOL)animated
 {
     for(MagicPieElement* elem in valuesToDelete){
+        elem->retainCount--;
         [[NSNotificationCenter defaultCenter] removeObserver:self name:pieElementChangedNotificationIdentifier object:elem];
     }
     NSMutableArray* newValues = [[NSMutableArray alloc] initWithArray:self.values];
