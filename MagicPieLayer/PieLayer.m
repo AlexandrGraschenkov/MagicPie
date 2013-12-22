@@ -23,190 +23,128 @@
 // THE SOFTWARE.
 //
 
-#import "MagicPieLayer.h"
-#define ANIM_KEY_PER_SECOND 40
+#import "PieLayer.h"
+#import "PieElement.h"
+#define ANIM_KEY_PER_SECOND 36
 
 //[0..1]
-static inline float translateValue(float x){
+inline float translateValue(float x){
     //1/(1+e^((0.5-x)*12))
     return 1/(1+powf(M_E, (0.5-x)*12));
 }
 
-static inline UIColor* colorBetween2Colors(UIColor* color1, UIColor* color2, float val){
-    val = MIN(MAX(val, 0.0), 1.0);
-    CGFloat red1 = 0.0, green1 = 0.0, blue1 = 0.0, alpha1 =0.0;
-    [color1 getRed:&red1 green:&green1 blue:&blue1 alpha:&alpha1];
-    CGFloat red2 = 0.0, green2 = 0.0, blue2 = 0.0, alpha2 =0.0;
-    [color2 getRed:&red2 green:&green2 blue:&blue2 alpha:&alpha2];
-    
-    return [UIColor colorWithRed:(red2-red1)* val + red1
-                           green:(green2-green1)*val + green1
-                            blue:(blue2-blue1)*val + blue1
-                           alpha:(alpha2-alpha1)*val + alpha1];
-}
-
-static inline void insertObjectsToArray(NSMutableArray* arr, NSArray* insertArr, NSArray* indexesArr){
+inline void sortObjectsAndIndexesByIndex(NSMutableArray* objects, NSMutableArray* indexes){
     NSMutableArray* dataArray = [NSMutableArray array];
-    for(int i = 0; i < insertArr.count; i++){
-        [dataArray addObject:@{@"Object" : insertArr[i], @"Index" : indexesArr[i]}];
+    for(int i = 0; i < indexes.count; i++){
+        [dataArray addObject:@{@"Object" : objects[i], @"Index" : indexes[i]}];
     }
-    
     [dataArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"Index" ascending:YES]]];
     
-    float displace = 0;
-    for(NSDictionary* dicWrap in dataArray){
-        int pos = displace + [dicWrap[@"Index"] integerValue];
-        [arr insertObject:dicWrap[@"Object"] atIndex:pos];
-        if(pos+1 < arr.count)
-            displace++;
+    [objects removeAllObjects];
+    [indexes removeAllObjects];
+    for(NSDictionary* dic in dataArray){
+        [objects addObject:dic[@"Object"]];
+        [objects addObject:dic[@"Index"]];
     }
 }
 
-static inline NSArray* indexesOfObjects(NSArray* arr1, NSArray* arr2){
+inline void insertObjectsToArray(NSMutableArray* arr, NSMutableArray* objects, NSMutableArray* indexes){
+    sortObjectsAndIndexesByIndex(objects, indexes);
+    for(int i = 0; i < indexes.count; i++){
+        [arr insertObject:objects[i] atIndex:[indexes[i] integerValue]];
+    }
+}
+
+inline NSArray* indexesOfObjects(NSArray* arr1, NSArray* arr2){
     NSMutableArray* result = [NSMutableArray array];
     for(id obj in arr2)
         [result addObject:@([arr1 indexOfObject:obj])];
     return [NSArray arrayWithArray:result];
 }
 
-NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNotificationIdentifier";
 
-@implementation MagicPieElement{
-    BOOL hasChanges;
-@public
-    float titleAlpha;
-    int retainCount;
-}
+#pragma mark - Animation object wrapper
+@interface InsertElement : NSObject
+@property (nonatomic, strong, readonly) PieElement* elem;
+@property (nonatomic, assign, readonly) int index;
+- (id)initWithElement:(PieElement*)elem toIndex:(int)index;
+@end
 
-- (id)init
+@implementation InsertElement
+- (id)initWithElement:(PieElement*)elem toIndex:(int)index
 {
     self = [super init];
     if(self){
-        self.animateChanges = YES;
-        hasChanges = NO;
-        titleAlpha = 1.0;
+        _elem = elem;
+        _index = index;
+    }
+    return self;
+}
+@end
+
+@interface DeleteElement : NSObject
+@property (nonatomic, assign, readonly) int index;
+- (id)initWithIndex:(int)index;
+@end
+
+@implementation DeleteElement
+- (id)initWithIndex:(int)index;
+{
+    self = [super init];
+    if(self){
+        _index = index;
+    }
+    return self;
+}
+@end
+
+@interface ChangeElement : NSObject
+@property (nonatomic, strong, readonly) PieElement* fromValue;
+@property (nonatomic, strong, readonly) PieElement* toValue;
+- (id)initWithFromValue:(PieElement*)fromValue toValue:(PieElement*)toValue;
+@end
+
+@implementation ChangeElement
+
+- (id)initWithFromValue:(PieElement *)fromValue toValue:(PieElement *)toValue
+{
+    self = [super init];
+    if(self){
+        _fromValue = fromValue;
+        _toValue = toValue;
     }
     return self;
 }
 
--(id)copyWithZone:(NSZone *)zone
-{
-    MagicPieElement *another = [[MagicPieElement allocWithZone:zone] init];
-    [another fillWithPieElement:self];
-    
-    return another;
-}
-
-- (void)fillWithPieElement:(MagicPieElement*)elem
-{
-    _val = elem.val;
-    _color = elem.color;
-    _centrOffset = elem.centrOffset;
-    _showTitle = elem.showTitle;
-    titleAlpha = elem->titleAlpha;
-}
-
-- (NSString*)description
-{
-    return [NSString stringWithFormat:@"[%@: %f]", NSStringFromClass(self.class), self.val];
-}
-
-+ (MagicPieElement*)pieElementWithValue:(float)val color:(UIColor *)color
-{
-    MagicPieElement* result = [MagicPieElement new];
-    [result setVal_:val];
-    [result setColor_:color];
-    return result;
-}
-
-- (NSArray*)animationValuesToPieElement:(MagicPieElement*)anotherElement arrayCapacity:(NSUInteger)count
-{
-    if(count == 1) return @[anotherElement];
-    
-    NSMutableArray* result = [NSMutableArray arrayWithCapacity:count];
-    for (int i = 0; i < count; i++) {
-        float v = i / (float)(count - 1);
-        MagicPieElement* newElem = [MagicPieElement pieElementWithValue:(anotherElement.val - self.val) * v + self.val
-                                                                  color:colorBetween2Colors(self.color, anotherElement.color, v)];
-        [newElem setCentrOffset_: (anotherElement.centrOffset - self.centrOffset) * v + self.centrOffset];
-        newElem->titleAlpha = (anotherElement->titleAlpha - titleAlpha) * v + titleAlpha;
-        newElem.showTitle = self.showTitle;
-        [result addObject:newElem];
-    }
-    return result;
-}
-
-#pragma mark - Setters
-- (void)setVal:(float)val
-{
-    [self prepareDelayedChangeNotification];
-    if(val < 0){
-#ifdef DEBUG
-        NSLog(@"[%@ %@]- Negative values not allowed: val=%f => 0.0", NSStringFromClass(self.class), NSStringFromSelector(_cmd), val);
-#endif
-        val = 0.0;
-    }
-    _val = val;
-}
-- (void)setVal_:(float)val
-{
-    _val = val;
-}
-
-- (void)setColor:(UIColor *)color
-{
-    [self prepareDelayedChangeNotification];
-    _color = color;
-}
-- (void)setColor_:(UIColor *)color
-{
-    _color = color;
-}
-
-- (void)setCentrOffset:(float)centrOffset
-{
-    [self prepareDelayedChangeNotification];
-    _centrOffset = centrOffset;
-}
-- (void)setCentrOffset_:(float)centrOffset
-{
-    _centrOffset = centrOffset;
-}
-
-- (void)setShowTitle:(BOOL)showTitle
-{
-    [self prepareDelayedChangeNotification];
-    _showTitle = showTitle;
-}
-
-- (void)prepareDelayedChangeNotification
-{
-    if(hasChanges || retainCount <= 0)
-        return;
-    MagicPieElement* copyElement = [self copy];
-    hasChanges = YES;
-    [self performSelector:@selector(sendChangeNotification:) withObject:copyElement afterDelay:0.0];
-}
-
-- (void)sendChangeNotification:(MagicPieElement*)begunState
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:pieElementChangedNotificationIdentifier object:self userInfo:@{@"begunState" : begunState}];
-    hasChanges = NO;
-}
-
 @end
 
-@interface MagicPieLayer ()
+extern NSString * const pieElementChangedNotificationIdentifier;
+
+@interface PieElement(hidden)
+@property (nonatomic, assign) float titleAlpha;
+@property (nonatomic, assign) int retainCount2;
+- (void)setVal_:(float)val;
+- (void)setColor_:(UIColor *)color;
+- (void)setCentrOffset_:(float)centrOffset;
+- (NSArray*)animationValuesToPieElement:(PieElement*)anotherElement arrayCapacity:(NSUInteger)count;
+@end
+
+
+#pragma mark - PieLayer
+@interface PieLayer ()
 {
     BOOL isInitalized;
 }
 @property (nonatomic, strong) UIFont* font;
 @property (nonatomic, strong, readwrite) NSArray* values;
 @property (nonatomic, strong) NSMutableArray* deletingIndexes;
+@property (nonatomic, strong) NSMutableArray* delayedChangeValues;
+@property (nonatomic, strong) NSArray* delayedStartValues;
+@property (nonatomic, strong) NSArray* startValuesState;
 @property (nonatomic, assign) BOOL isFakeAngleAnimation;
 @end
 
-@implementation MagicPieLayer
+@implementation PieLayer
 @dynamic values, deletingIndexes, maxRadius, minRadius, font, transformValueBlock, startAngle, endAngle, isFakeAngleAnimation, showTitles;
 @synthesize animationDuration;
 
@@ -231,6 +169,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 
 - (void)setup
 {
+    self.delayedChangeValues = [NSMutableArray new];
     self.maxRadius = 100;
     self.minRadius = 0;
     self.startAngle = 0.0;
@@ -259,13 +198,14 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 - (void)insertValues:(NSArray *)array atIndexes:(NSArray *)indexes animated:(BOOL)animated
 {
     NSAssert2(array.count == indexes.count, @"Array sizes must be equal: values.count = %d; indexes.count = %d;", array.count, indexes.count);
-    for(MagicPieElement* elem in array){
-        elem->retainCount++;
+    for(PieElement* elem in array){
+        elem.retainCount2++;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pieElementUpdated:) name:pieElementChangedNotificationIdentifier object:elem];
     }
     
     NSMutableArray* newValues = [NSMutableArray arrayWithArray:self.values];
-    insertObjectsToArray(newValues, array, indexes);
+    NSMutableArray* mutableArray = [array mutableCopy];
+    insertObjectsToArray(newValues, mutableArray, [indexes mutableCopy]);
     
     if(animated){
         BOOL const isAnimating = [self animationForKey:@"animationValues"] != nil;
@@ -301,21 +241,21 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
         //_______ fromValues _______
         NSMutableArray* fromValues = [NSMutableArray arrayWithArray:currValues];
         NSMutableArray* copyInsertArr = [[NSMutableArray alloc] initWithArray:array copyItems:YES];
-        for(MagicPieElement* elem in copyInsertArr){
+        for(PieElement* elem in copyInsertArr){
             [elem setVal_:0.0];
-            elem->titleAlpha = 0.0;
+            elem.titleAlpha = 0.0;
         }
         insertObjectsToArray(fromValues, copyInsertArr, indexesWithDeletingElements);
         
         //_______ toValues _______
         NSMutableArray* toValues = [[NSMutableArray alloc]initWithArray:self.values copyItems:YES];
         for(NSNumber* deleteIndex in deletingIndexes){
-            MagicPieElement* elem = [currValues[deleteIndex.integerValue] copy];
+            PieElement* elem = [currValues[deleteIndex.integerValue] copy];
             [elem setVal_:0.0];
-            elem->titleAlpha = 0.0;
+            elem.titleAlpha = 0.0;
             [toValues insertObject:elem atIndex:deleteIndex.integerValue];
         }
-        insertObjectsToArray(toValues, array, indexesWithDeletingElements);
+        insertObjectsToArray(toValues, mutableArray, indexesWithDeletingElements);
         
         //_______ new deleting elements _______
         NSArray* sortedIndexes = [indexesWithDeletingElements sortedArrayUsingSelector:@selector(compare:)];
@@ -340,8 +280,9 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 
 - (void)deleteValues:(NSArray *)valuesToDelete animated:(BOOL)animated
 {
-    for(MagicPieElement* elem in valuesToDelete){
-        elem->retainCount--;
+    for(PieElement* elem in valuesToDelete){
+        if([self.values containsObject:elem])
+            elem.retainCount2--;
         [[NSNotificationCenter defaultCenter] removeObserver:self name:pieElementChangedNotificationIdentifier object:elem];
     }
     NSMutableArray* newValues = [[NSMutableArray alloc] initWithArray:self.values];
@@ -369,7 +310,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
         }
         
         int i = 0;//index of deleting objects
-        for(MagicPieElement* elem in self.values){
+        for(PieElement* elem in self.values){
             while ([deletingIndexes containsObject:@(i)]) {
                 i++;
             }
@@ -384,9 +325,9 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
         NSMutableArray* toValues = [NSMutableArray arrayWithArray:newValues];
         for(NSNumber* deleteIndex in deletingIndexes){
             int pos = [deleteIndex integerValue];
-            MagicPieElement* deleteElement = [currValues[pos] copy];
+            PieElement* deleteElement = [currValues[pos] copy];
             [deleteElement setVal_:0.0];
-            deleteElement->titleAlpha = 0.0;
+            deleteElement.titleAlpha = 0.0;
             [toValues insertObject:deleteElement atIndex:pos];
         }
         [self removeAnimationForKey:@"animationValues"];
@@ -396,6 +337,130 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
         [self removeAnimationForKey:@"animationValues"];
     }
     self.values = newValues;
+}
+
+- (BOOL)performDelayedAnimation
+{
+    if(self.delayedChangeValues)
+        return YES;
+    BOOL const isAnimating = [self animationForKey:@"animationValues"] != nil;
+    self.delayedStartValues = isAnimating? [self.presentationLayer values] : self.values;
+    self.delayedChangeValues = [[NSMutableArray alloc] init];
+    
+    NSMutableArray* deletingIndexes = isAnimating? [NSMutableArray arrayWithArray:[self.presentationLayer deletingIndexes]] : [NSMutableArray array];
+    [deletingIndexes sortUsingSelector:@selector(compare:)];
+    BOOL isCountMatch = deletingIndexes.count + self.values.count == self.delayedStartValues.count;
+    if(!isCountMatch){//try solve problem
+        self.deletingIndexes = nil;
+        if(self.values.count != self.delayedStartValues.count){
+            return NO;
+        }
+    }
+    
+    [self performSelector:@selector(dalyedAnimateChanges) withObject:nil afterDelay:0.0];
+    return YES;
+}
+
+- (void)insertValues2:(NSArray *)array atIndexes:(NSArray *)indexes animated:(BOOL)animated
+{
+    NSAssert2(array.count == indexes.count, @"Array sizes must be equal: values.count = %d; indexes.count = %d;", array.count, indexes.count);
+    for(PieElement* elem in array){
+        elem.retainCount2++;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pieElementUpdated:) name:pieElementChangedNotificationIdentifier object:elem];
+    }
+    
+    NSMutableArray* newValues = [NSMutableArray arrayWithArray:self.values];
+    NSMutableArray* mutArray = [array mutableCopy];
+    NSMutableArray* 
+    insertObjectsToArray(newValues, array, indexes);
+    self.values = [NSArray arrayWithArray:newValues];
+    
+    if(![self performDelayedAnimation]){
+        [self removeAnimationForKey:@"animationValues"];
+        return;
+    }
+    
+    for(int i = 0; i < array.count; i++){
+        InsertElement* insertElem = [[InsertElement alloc] initWithElement:array[i] toIndex:[indexes[i] integerValue]];
+        [self.delayedChangeValues addObject:insertElem];
+    }
+}
+
+- (void)deleteValues2:(NSArray *)valuesToDelete animated:(BOOL)animated
+{
+    for(PieElement* elem in valuesToDelete){
+        if([self.values containsObject:elem])
+            elem.retainCount2--;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:pieElementChangedNotificationIdentifier object:elem];
+    }
+    
+    NSMutableArray* newValues = [NSMutableArray arrayWithArray:self.values];
+    [newValues removeObjectsInArray:valuesToDelete];
+    self.values = [NSArray arrayWithArray:newValues];
+    
+    if(![self performDelayedAnimation]){
+        [self removeAnimationForKey:@"animationValues"];
+        return;
+    }
+    
+}
+
+- (void)dalyedAnimateChanges
+{
+    if(self.delayedChangeValues.count == 0)
+        return;
+    
+    NSMutableArray* fromValues = [NSMutableArray arrayWithArray:self.delayedStartValues];
+    NSMutableArray* toValues = [NSMutableArray array];
+    for(id action in self.delayedChangeValues){
+        if([action isKindOfClass:[InsertElement class]]){
+            [self updateAnimationArrayWithInsert:action fromValues:fromValues toValues:toValues deletingIndexes:self.deletingIndexes];
+        } else if([action isKindOfClass:[ChangeElement class]]){
+            [self updateAnimationArrayWithChange:action fromValues:fromValues toValues:toValues];
+        } else if([action isKindOfClass:[DeleteElement class]]){
+            [self updateAnimationArrayWithDelete:action toValues:toValues deletingIndexes:self.deletingIndexes];
+        }
+    }
+}
+
+- (void)updateAnimationArrayWithInsert:(InsertElement*)insertElement
+                            fromValues:(NSMutableArray*)fromValues
+                              toValues:(NSMutableArray*)toValues
+                       deletingIndexes:(NSMutableArray*)deletingIndexes
+{
+    PieElement* startElem = [insertElement copy];
+    [startElem setVal_:0.0];
+    startElem.titleAlpha = 0.0;
+    
+    [fromValues insertObject:startElem atIndex:insertElement.index];
+    [toValues insertObject:insertElement.elem atIndex:insertElement.index];
+    for(int i = 0; i < deletingIndexes.count; i++){
+        int deleteIdx = [deletingIndexes[i] integerValue];
+        if(insertElement.index <= deleteIdx)
+            deletingIndexes[i] = @(deleteIdx + 1);
+    }
+}
+
+- (void)updateAnimationArrayWithChange:(ChangeElement*)changeElement
+                            fromValues:(NSMutableArray*)fromValues
+                              toValues:(NSMutableArray*)toValues
+{
+    int idx = [fromValues indexOfObject:changeElement.fromValue];
+    if(idx == NSNotFound)return;
+    toValues[idx] = changeElement.toValue;
+}
+
+- (void)updateAnimationArrayWithDelete:(InsertElement*)deleteElement
+                              toValues:(NSMutableArray*)toValues
+                       deletingIndexes:(NSMutableArray*)deletingIndexes
+{
+    int delIdx = deleteElement.index;
+    if(delIdx >= 0 && delIdx < toValues.count && ![deletingIndexes containsObject:@(delIdx)]){
+        PieElement* deleteElement = toValues[delIdx];
+        [deleteElement setVal_:0.0];
+        deleteElement.titleAlpha = 0.0;
+        [deletingIndexes addObject:@(delIdx)];
+    }
 }
 
 #pragma mark - Animate setters
@@ -490,8 +555,8 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 
 - (void)pieElementUpdated:(NSNotification*)notif
 {
-    MagicPieElement* newElem = notif.object;
-    MagicPieElement* prevValue = notif.userInfo[@"begunState"];
+    PieElement* newElem = notif.object;
+    PieElement* prevValue = notif.userInfo[@"begunState"];
     int indxOfObject = [self.values indexOfObject:newElem];
     BOOL const isAnimating = [self animationForKey:@"animationValues"] != nil;
     
@@ -521,9 +586,9 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
         }
         NSMutableArray* toValues = [[NSMutableArray alloc]initWithArray:self.values copyItems:YES];
         for(NSNumber* deleteIndex in deletingIndexes){
-            MagicPieElement* elem = [currValues[deleteIndex.integerValue] copy];
+            PieElement* elem = [currValues[deleteIndex.integerValue] copy];
             [elem setVal_:0.0];
-            elem->titleAlpha = 0.0;
+            elem.titleAlpha = 0.0;
             [toValues insertObject:elem atIndex:deleteIndex.integerValue];
         }
         
@@ -657,7 +722,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
     
     float angleStart = self.startAngle * M_PI / 180.0;
     float angleInterval = (self.endAngle - self.startAngle) * M_PI / 180.0;
-    for(MagicPieElement* elem in self.values){
+    for(PieElement* elem in self.values){
         float angleEnd = angleStart + angleInterval * elem.val / sum;
         float centrAngle = (angleEnd + angleStart) * 0.5;
         CGPoint centrWithOffset = elem.centrOffset > 0? CGPointMake(cosf(centrAngle) * elem.centrOffset + centr.x, sinf(centrAngle) * elem.centrOffset + centr.y) : centr;
@@ -702,15 +767,15 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
     
     float angleStart = self.startAngle * M_PI / 180.0;
     float angleInterval = (self.endAngle - self.startAngle) * M_PI / 180.0;
-    for(MagicPieElement* elem in self.values){
+    for(PieElement* elem in self.values){
         float angleEnd = angleStart + angleInterval * elem.val / sum;
         BOOL showTitle = elem.showTitle || self.showTitles == ShowTitlesAlways;
-        if(!showTitle || elem->titleAlpha <= 0.01){
+        if(!showTitle || elem.titleAlpha <= 0.01){
             angleStart = angleEnd;
             continue;
         }
         UIColor* color = elem.color?: [UIColor blackColor];
-        color = [color colorWithAlphaComponent:elem->titleAlpha];
+        color = [color colorWithAlphaComponent:elem.titleAlpha];
         CGContextSetFillColorWithColor(ctx, color.CGColor);
         
         float angle = (angleStart + angleEnd) / 2.0;
@@ -758,7 +823,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
 
 #pragma mark - Hit
 
-- (MagicPieElement*)pieElemInPoint:(CGPoint)point
+- (PieElement*)pieElemInPoint:(CGPoint)point
 {
     if(self.values.count == 0 || self.minRadius >= self.maxRadius)
         return nil;
@@ -769,7 +834,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
     
     point.y = self.frame.size.height - point.y;
     
-    MagicPieLayer* presentingLayer = ([self animationKeys].count > 0)? self.presentationLayer : self;
+    PieLayer* presentingLayer = ([self animationKeys].count > 0)? self.presentationLayer : self;
     float minRadius = presentingLayer.minRadius;
     float maxRadius = presentingLayer.maxRadius;
     float startAngle = presentingLayer.startAngle;
@@ -778,7 +843,7 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
     float angleStart = startAngle * M_PI / 180.0;
     float angleInterval = (endAngle - startAngle) * M_PI / 180.0;
     int realIdx = 0, presentIdx = 0;
-    for(MagicPieElement* elem in presentingLayer.values){
+    for(PieElement* elem in presentingLayer.values){
         if([presentingLayer.deletingIndexes containsObject:@(presentIdx)]){
             presentIdx++;
             continue;
@@ -807,6 +872,14 @@ NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNo
     }
 
     return nil;
+}
+
+- (void)dealloc
+{
+    for(PieElement* elem in self.values){
+        elem.retainCount2--;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:pieElementChangedNotificationIdentifier object:elem];
+    }
 }
 
 @end

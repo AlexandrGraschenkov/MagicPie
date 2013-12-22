@@ -7,6 +7,7 @@
 //
 
 #import "TestPieLayer.h"
+#import "MagicPieLayer.h"
 
 typedef enum PieAction
 {
@@ -17,7 +18,7 @@ typedef enum PieAction
 
 @implementation TestPieLayer
 
-+ (void)testsOnPieLayer:(MagicPieLayer*)pieLayer testCount:(int)count eachActionBlock:(void(^)(NSString* actionDesc))actionBlock
++ (void)testsOnPieLayer:(PieLayer*)pieLayer testCount:(int)count eachActionBlock:(void(^)(NSString* actionDesc))actionBlock
 {
     NSDictionary* userInfo = @{@"actionBlock" : actionBlock, @"count" : [NSMutableString stringWithFormat:@"%d", count], @"pieLayer" : pieLayer};
     [NSTimer scheduledTimerWithTimeInterval:0.1
@@ -40,7 +41,7 @@ typedef enum PieAction
     }
     
     void(^actionBlock)(NSString* actionDesc) = timer.userInfo[@"actionBlock"];
-    MagicPieLayer* pieLayer = timer.userInfo[@"pieLayer"];
+    PieLayer* pieLayer = timer.userInfo[@"pieLayer"];
     if(actionBlock){
         int valuesCount = pieLayer.values.count;
         NSString* actionDesc = [self runRandomActionWithPie:pieLayer];
@@ -52,7 +53,7 @@ typedef enum PieAction
         [self runRandomActionWithPie:pieLayer];
 }
 
-+ (NSString*)runRandomActionWithPie:(MagicPieLayer*)pieLayer
++ (NSString*)runRandomActionWithPie:(PieLayer*)pieLayer
 {
     int action = arc4random() % 3;
     if (action == PieActionAdd){
@@ -118,9 +119,9 @@ typedef enum PieAction
     return [NSArray arrayWithArray:arr];
 }
 
-+ (MagicPieElement*)randElem
++ (PieElement*)randElem
 {
-    MagicPieElement* result = [MagicPieElement pieElementWithValue:(arc4random() % 10 + 5) color:[self randColor]];
+    PieElement* result = [PieElement pieElementWithValue:(arc4random() % 10 + 5) color:[self randColor]];
 //    result.showTitle = YES;
     return result;
 }

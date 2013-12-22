@@ -29,7 +29,7 @@ static UIColor* randomColor(){
 
 - (IBAction)addPressed:(id)sender
 {
-    MagicPieElement* newElem = [MagicPieElement pieElementWithValue:(5 + arc4random() % 10) color:randomColor()];
+    PieElement* newElem = [PieElement pieElementWithValue:(5 + arc4random() % 10) color:randomColor()];
 //    newElem.showTitle = YES;
     int insertIndex = self.pieView.layer.values.count;//arc4random() % (pieLayer.values.count + 1);
     [self.pieView.layer insertValues:@[newElem] atIndexes:@[@(insertIndex)] animated:YES];
@@ -52,10 +52,16 @@ static UIColor* randomColor(){
 
 - (IBAction)animateChangeVal:(id)sender
 {
-    int randIndx = arc4random() % self.pieView.layer.values.count;
-    [self.pieView.layer.values[randIndx] setVal:(5 + arc4random() % 10)];
+    int randCount = MAX(MIN(self.pieView.layer.values.count, 2), arc4random() % self.pieView.layer.values.count);
+    NSMutableArray* randIndexes = [NSMutableArray new];
+    for(int i = 0; i < randCount; i++){
+        int randIndx = arc4random() % self.pieView.layer.values.count;
+        [randIndexes addObject:@(randIndx)];
+        int randVal = (5 + arc4random() % 10);
+        [self.pieView.layer.values[randIndx] setVal:randVal];
+    }
 #ifdef LOG_ACTION
-    NSLog(@"Change values at indixes %@", [self arrDesc:@[@(randIndx)]]);
+    NSLog(@"Change values at indixes %@", [self arrDesc:randIndexes]);
 #endif
 }
 

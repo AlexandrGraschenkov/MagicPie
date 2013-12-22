@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class MagicPieLayer;
+@class PieLayer;
 @interface ExamplePieView : UIView
 
 
 @end
 
 @interface ExamplePieView (ex)
-@property(nonatomic,readonly,retain) MagicPieLayer *layer;
+@property(nonatomic,readonly,retain) PieLayer *layer;
 @end

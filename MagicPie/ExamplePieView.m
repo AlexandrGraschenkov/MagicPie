@@ -12,7 +12,7 @@
 @interface ExamplePieView ()
 {
     CGPoint panNormalizedVector;
-    MagicPieElement* panPieElem;
+    PieElement* panPieElem;
     float panStartCenterOffsetElem;
     float panStartDotProduct;
 }
@@ -22,7 +22,7 @@
 
 + (Class)layerClass
 {
-    return [MagicPieLayer class];
+    return [PieLayer class];
 }
 
 - (id)init
@@ -89,7 +89,7 @@
         return;
     
     CGPoint pos = [tap locationInView:tap.view];
-    MagicPieElement* elem = [self.layer pieElemInPoint:pos];
+    PieElement* elem = [self.layer pieElemInPoint:pos];
     elem.color = [self randomColor];
 }
 

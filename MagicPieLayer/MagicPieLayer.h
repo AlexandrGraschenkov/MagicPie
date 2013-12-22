@@ -1,68 +1,15 @@
 //
-//  PieLayer.h
-//  infoAnalytucalPortal
+//  MagicPieLayer.h
+//  MagicPie
 //
-// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+//  Created by Alexandr on 03.11.13.
+//  Copyright (c) 2013 Alexandr Corporation. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
+#ifndef MagicPie_MagicPieLayer_h
+#define MagicPie_MagicPieLayer_h
 
-@interface MagicPieElement : NSObject
+#import "PieLayer.h"
+#import "PieElement.h"
 
-+ (MagicPieElement*)pieElementWithValue:(float)val color:(UIColor*)color;
-@property (nonatomic, assign) float val;
-@property (nonatomic, strong) UIColor* color;
-@property (nonatomic, assign) float centrOffset;
-@property (nonatomic, assign) BOOL animateChanges;//default YES
-@property (nonatomic, assign) BOOL showTitle;//default NO
-
-@end
-
-
-typedef enum ShowTitles
-{
-    ShowTitlesNever = 0,
-    ShowTitlesIfEnable = 1,
-    ShowTitlesAlways = 2
-}ShowTitle;
-
-@interface MagicPieLayer : CALayer
-
-@property (nonatomic, strong, readonly) NSArray* values;
-- (void)addValues:(NSArray*)addingNewValues animated:(BOOL)animated;
-- (void)deleteValues:(NSArray*)valuesToDelete animated:(BOOL)animated;
-- (void)insertValues:(NSArray *)array atIndexes:(NSArray*)indexes animated:(BOOL)animated;
-
-@property (nonatomic, assign) float maxRadius;//default 100
-@property (nonatomic, assign) float minRadius;//default 0
-@property (nonatomic, assign) float startAngle;//default 0
-@property (nonatomic, assign) float endAngle;//default 360
-@property (nonatomic, assign) float animationDuration;//default 0.6
-@property (nonatomic, assign) ShowTitle showTitles;//defaul ShowTitleNever
-
-@property (nonatomic, assign) NSString*(^transformValueBlock)(MagicPieElement* val);//default x => [NSSring stringWithFormat:@"%.2f", x.val]
-
-- (void)setMaxRadius:(float)maxRadius minRadius:(float)minRadius animated:(BOOL)isAnimated;
-- (void)setStartAngle:(float)startAngle endAngle:(float)endAngle animated:(BOOL)isAnimated;
-
-- (MagicPieElement*)pieElemInPoint:(CGPoint)point;
-
-@end
+#endif

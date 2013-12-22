@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BD092F0C1806D09000E1C0E6 /* ExamplePieView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD092F0B1806D09000E1C0E6 /* ExamplePieView.m */; };
-		BD092F621807E1B500E1C0E6 /* MagicPieLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD092F611807E1B500E1C0E6 /* MagicPieLayer.m */; };
+		BD092F621807E1B500E1C0E6 /* PieLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD092F611807E1B500E1C0E6 /* PieLayer.m */; };
 		BD0CFE5817F94CC60038FBC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE5717F94CC60038FBC1 /* Foundation.framework */; };
 		BD0CFE5A17F94CC60038FBC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE5917F94CC60038FBC1 /* CoreGraphics.framework */; };
 		BD0CFE5C17F94CC60038FBC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE5B17F94CC60038FBC1 /* UIKit.framework */; };
@@ -23,6 +23,7 @@
 		BD0CFE8117F94CC60038FBC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD0CFE7F17F94CC60038FBC1 /* InfoPlist.strings */; };
 		BD0CFE8317F94CC60038FBC1 /* MagicPieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFE8217F94CC60038FBC1 /* MagicPieTests.m */; };
 		BD0CFEEC17FE98150038FBC1 /* TestPieLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFEEB17FE98150038FBC1 /* TestPieLayer.m */; };
+		BDCDD2B318268B8E0006C638 /* PieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCDD2B218268B8E0006C638 /* PieElement.m */; };
 		BDD303C618052C5A00380FBA /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDD303C518052C5A00380FBA /* ViewController.xib */; };
 /* End PBXBuildFile section */
 
@@ -39,8 +40,8 @@
 /* Begin PBXFileReference section */
 		BD092F0A1806D09000E1C0E6 /* ExamplePieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamplePieView.h; sourceTree = "<group>"; };
 		BD092F0B1806D09000E1C0E6 /* ExamplePieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamplePieView.m; sourceTree = "<group>"; };
-		BD092F601807E1B500E1C0E6 /* MagicPieLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicPieLayer.h; sourceTree = "<group>"; };
-		BD092F611807E1B500E1C0E6 /* MagicPieLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicPieLayer.m; sourceTree = "<group>"; };
+		BD092F601807E1B500E1C0E6 /* PieLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieLayer.h; sourceTree = "<group>"; };
+		BD092F611807E1B500E1C0E6 /* PieLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieLayer.m; sourceTree = "<group>"; };
 		BD0CFE5417F94CC60038FBC1 /* MagicPie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicPie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0CFE5717F94CC60038FBC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BD0CFE5917F94CC60038FBC1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,6 +62,9 @@
 		BD0CFE8217F94CC60038FBC1 /* MagicPieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MagicPieTests.m; sourceTree = "<group>"; };
 		BD0CFEEA17FE98150038FBC1 /* TestPieLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPieLayer.h; sourceTree = "<group>"; };
 		BD0CFEEB17FE98150038FBC1 /* TestPieLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPieLayer.m; sourceTree = "<group>"; };
+		BDCDD2B118268B8E0006C638 /* PieElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieElement.h; sourceTree = "<group>"; };
+		BDCDD2B218268B8E0006C638 /* PieElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieElement.m; sourceTree = "<group>"; };
+		BDCDD2B418268D400006C638 /* MagicPieLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MagicPieLayer.h; sourceTree = "<group>"; };
 		BDD303C518052C5A00380FBA /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,8 +95,11 @@
 		BD092F5F1807E1B500E1C0E6 /* MagicPieLayer */ = {
 			isa = PBXGroup;
 			children = (
-				BD092F601807E1B500E1C0E6 /* MagicPieLayer.h */,
-				BD092F611807E1B500E1C0E6 /* MagicPieLayer.m */,
+				BDCDD2B418268D400006C638 /* MagicPieLayer.h */,
+				BD092F601807E1B500E1C0E6 /* PieLayer.h */,
+				BD092F611807E1B500E1C0E6 /* PieLayer.m */,
+				BDCDD2B118268B8E0006C638 /* PieElement.h */,
+				BDCDD2B218268B8E0006C638 /* PieElement.m */,
 			);
 			path = MagicPieLayer;
 			sourceTree = SOURCE_ROOT;
@@ -283,11 +290,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD092F621807E1B500E1C0E6 /* MagicPieLayer.m in Sources */,
+				BD092F621807E1B500E1C0E6 /* PieLayer.m in Sources */,
 				BD0CFE6E17F94CC60038FBC1 /* ViewController.m in Sources */,
 				BD0CFE6817F94CC60038FBC1 /* AppDelegate.m in Sources */,
 				BD0CFEEC17FE98150038FBC1 /* TestPieLayer.m in Sources */,
 				BD092F0C1806D09000E1C0E6 /* ExamplePieView.m in Sources */,
+				BDCDD2B318268B8E0006C638 /* PieElement.m in Sources */,
 				BD0CFE6417F94CC60038FBC1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

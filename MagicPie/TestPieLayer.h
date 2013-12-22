@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MagicPieLayer.h"
 
+@class PieLayer;
 @interface TestPieLayer : NSObject
 
-+ (void)testsOnPieLayer:(MagicPieLayer*)pieLayer testCount:(int)count eachActionBlock:(void(^)(NSString* actionDesc))actionBlock;
++ (void)testsOnPieLayer:(PieLayer*)pieLayer testCount:(int)count eachActionBlock:(void(^)(NSString* actionDesc))actionBlock;
 
 @end
