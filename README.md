@@ -4,6 +4,8 @@ MagicPie
 Amazing animations available with MagicPie!
 
 <img src="https://github.com/Sk0rpion/MagicPie/blob/master/MagicPie.gif?raw=true" alt="Demo" width="359" height="704" />
+
+
 <img src="https://github.com/Sk0rpion/MagicPie/blob/master/MagicPie2.gif?raw=true" alt="Demo" width="359" height="704" />
 
 
