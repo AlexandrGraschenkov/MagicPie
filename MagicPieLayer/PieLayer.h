@@ -1,6 +1,6 @@
 //
-//  PieLayer.h
-//  infoAnalytucalPortal
+// PieLayer.h
+// MagicPie
 //
 // Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
 //
@@ -47,11 +47,14 @@ typedef enum ShowTitles
 @property (nonatomic, assign) float animationDuration;//default 0.6
 @property (nonatomic, assign) ShowTitle showTitles;//defaul ShowTitleNever
 
-@property (nonatomic, assign) NSString*(^transformValueBlock)(PieElement* val);
+@property (nonatomic, assign) NSString*(^transformTitleBlock)(PieElement* val);
 
 - (void)setMaxRadius:(float)maxRadius minRadius:(float)minRadius animated:(BOOL)isAnimated;
 - (void)setStartAngle:(float)startAngle endAngle:(float)endAngle animated:(BOOL)isAnimated;
 
 - (PieElement*)pieElemInPoint:(CGPoint)point;
+
+//you can redefine draw elements
+- (void)drawElement:(PieElement*)elem context:(CGContextRef)ctx;
 
 @end

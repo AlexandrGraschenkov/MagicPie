@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class PieLayer;
-@interface ExamplePieView : UIView
+@class PieLayer, PieElement;
 
-
+@interface Example1PieView : UIView
+@property (nonatomic, copy) void(^elemTapped)(PieElement*);
 @end
 
-@interface ExamplePieView (ex)
+@interface Example1PieView (ex)
 @property(nonatomic,readonly,retain) PieLayer *layer;
 @end

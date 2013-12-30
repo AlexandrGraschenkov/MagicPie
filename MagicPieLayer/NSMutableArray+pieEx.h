@@ -1,8 +1,8 @@
 //
-// PieElement.h
+// NSMutableArray+pieEx.h
 // MagicPie
 //
-// Created by Alexandr on 03.11.13.
+// Created by Alexander on 27.12.13.
 // Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,15 +26,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PieElement : NSObject <NSCopying>
+@interface NSMutableArray (pieEx)
 
-+ (instancetype)pieElementWithValue:(float)val color:(UIColor*)color;
+- (void)sortWithIndexes:(NSArray*)indexes;
 
-+ (void)animateChanges:(void(^)())changesBlock;
+- (void)insertSortedObjects:(NSArray*)objects indexes:(NSArray*)indexes;
 
-@property (nonatomic, assign) float val;
-@property (nonatomic, strong) UIColor* color;
-@property (nonatomic, assign) float centrOffset;
-@property (nonatomic, assign) BOOL showTitle;//default NO
+- (void)insertObjects:(NSArray*)objects indexes:(NSArray*)indexes;
+
+// Ex: [@[@1, @2] updateIndexesWithUnusedIndexes:@[@2]] => @[@1, @3]
+- (void)updateIndexesWithUnusedIndexes:(NSArray*)unusedIndexes;
 
 @end

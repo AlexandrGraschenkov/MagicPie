@@ -1,51 +1,61 @@
 //
-//  PieEl.m
-//  MagicPie
+// PieElement.m
+// MagicPie
 //
-//  Created by Alexandr on 03.11.13.
-//  Copyright (c) 2013 Alexandr Corporation. All rights reserved.
+// Created by Alexandr on 03.11.13.
+// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 #import "PieElement.h"
 
-inline UIColor* colorBetween2Colors(UIColor* color1, UIColor* color2, float val){
-    val = MIN(MAX(val, 0.0), 1.0);
-    CGFloat red1 = 0.0, green1 = 0.0, blue1 = 0.0, alpha1 =0.0;
-    [color1 getRed:&red1 green:&green1 blue:&blue1 alpha:&alpha1];
-    CGFloat red2 = 0.0, green2 = 0.0, blue2 = 0.0, alpha2 =0.0;
-    [color2 getRed:&red2 green:&green2 blue:&blue2 alpha:&alpha2];
-    
-    return [UIColor colorWithRed:(red2-red1)* val + red1
-                           green:(green2-green1)*val + green1
-                            blue:(blue2-blue1)*val + blue1
-                           alpha:(alpha2-alpha1)*val + alpha1];
-}
-
 NSString * const pieElementChangedNotificationIdentifier = @"PieElementChangedNotificationIdentifier";
+NSString * const pieElementAnimateChangesNotificationIdentifier = @"PieElementAnimateChangesNotificationIdentifier";
 
 static BOOL animateChanges;
-static NSMutableArray* elementsToAnimate;
 
-@interface PieElement(){
-    PieElement* beginAnimationState;
+@protocol PieLayerUpdateProtocol <NSObject>
+- (void)pieElementUpdate;
+- (void)pieElementWillAnimateUpdate;
+@end
+
+@interface PieElement()
+{
+    NSMutableArray* containsInLayers;
 }
 @property (nonatomic, assign) float titleAlpha;
-@property (nonatomic, assign) int retainCount2;
 @end
 
 @implementation PieElement
 
-+ (PieElement*)pieElementWithValue:(float)val color:(UIColor *)color
++ (instancetype)pieElementWithValue:(float)val color:(UIColor *)color
 {
-    PieElement* result = [PieElement new];
+    PieElement* result = [self new];
     result->_val = val;
     result->_color = color;
     return result;
 }
 
--(id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
-    PieElement *another = [[PieElement allocWithZone:zone] init];
+    PieElement *another = [[[self class] allocWithZone:zone] init];
     [another fillWithPieElement:self];
     
     return another;
@@ -67,14 +77,9 @@ static NSMutableArray* elementsToAnimate;
 
 + (void)animateChanges:(void (^)())changesBlock
 {
-    elementsToAnimate = [NSMutableArray new];
     animateChanges = YES;
     changesBlock();
     animateChanges = NO;
-    for(PieElement* elem in elementsToAnimate){
-        [elem commitChanges];
-    }
-    elementsToAnimate = nil;
 }
 
 - (NSArray*)animationValuesToPieElement:(PieElement*)anotherElement arrayCapacity:(NSUInteger)count
@@ -84,8 +89,10 @@ static NSMutableArray* elementsToAnimate;
     NSMutableArray* result = [NSMutableArray arrayWithCapacity:count];
     for (int i = 0; i < count; i++) {
         float v = i / (float)(count - 1);
-        PieElement* newElem = [PieElement pieElementWithValue:(anotherElement.val - self.val) * v + self.val
-                                                        color:colorBetween2Colors(self.color, anotherElement.color, v)];
+        UIColor* newColor = [self colorBetweenColor1:self.color color2:anotherElement.color value:v];
+        PieElement* newElem = [self copy];
+        newElem.val_ = (anotherElement.val - self.val) * v + self.val;
+        newElem.color_ = newColor;
         [newElem setCentrOffset_: (anotherElement.centrOffset - self.centrOffset) * v + self.centrOffset];
         newElem.titleAlpha = (anotherElement.titleAlpha - _titleAlpha) * v + _titleAlpha;
         newElem.showTitle = self.showTitle;
@@ -94,20 +101,30 @@ static NSMutableArray* elementsToAnimate;
     return result;
 }
 
-- (void)commitChanges
+- (void)addedToPieLayer:(id<PieLayerUpdateProtocol>)pieLayer
 {
-    if(_retainCount2 <= 0)
-        return;
-    
-    NSDictionary* userInfo = nil;
-    if(beginAnimationState){
-        userInfo = @{@"begunState" : beginAnimationState};
-        beginAnimationState = nil;
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:pieElementChangedNotificationIdentifier object:self userInfo:userInfo];
+    if(!containsInLayers)
+        containsInLayers = [NSMutableArray new];
+    NSValue* wraper = [NSValue valueWithNonretainedObject:pieLayer];
+    [containsInLayers addObject:wraper];
 }
 
+- (void)removedFromLayer:(id<PieLayerUpdateProtocol>)pieLayer
+{
+    [containsInLayers removeObject:pieLayer];
+}
 
+- (void)notifyPerformForAnimation
+{
+    for(NSValue* notRetainedVal in containsInLayers)
+        [notRetainedVal.nonretainedObjectValue pieElementWillAnimateUpdate];
+}
+
+- (void)notifyUpdated
+{
+    for(NSValue* notRetainedVal in containsInLayers)
+        [notRetainedVal.nonretainedObjectValue pieElementUpdate];
+}
 
 #pragma mark - Setters
 - (void)setVal:(float)val
@@ -118,12 +135,15 @@ static NSMutableArray* elementsToAnimate;
 #endif
         val = 0.0;
     }
-    _val = val;
+    if(val == _val)
+        return;
+    
     if(animateChanges){
-        if(![elementsToAnimate containsObject:self])
-            [elementsToAnimate addObject:self];
-    } else {
-        [self commitChanges];
+        [self notifyPerformForAnimation];
+    }
+    _val = val;
+    if(!animateChanges){
+        [self notifyUpdated];
     }
 }
 - (void)setVal_:(float)val
@@ -133,12 +153,14 @@ static NSMutableArray* elementsToAnimate;
 
 - (void)setColor:(UIColor *)color
 {
-    _color = color;
+    if([color isEqual:_color])
+        return;
     if(animateChanges){
-        if(![elementsToAnimate containsObject:self])
-            [elementsToAnimate addObject:self];
-    } else {
-        [self commitChanges];
+        [self notifyPerformForAnimation];
+    }
+    _color = color;
+    if(!animateChanges){
+        [self notifyUpdated];
     }
 }
 - (void)setColor_:(UIColor *)color
@@ -148,12 +170,15 @@ static NSMutableArray* elementsToAnimate;
 
 - (void)setCentrOffset:(float)centrOffset
 {
-    _centrOffset = centrOffset;
+    if(_centrOffset == centrOffset)
+        return;
+    
     if(animateChanges){
-        if(![elementsToAnimate containsObject:self])
-            [elementsToAnimate addObject:self];
-    } else {
-        [self commitChanges];
+        [self notifyPerformForAnimation];
+    }
+    _centrOffset = centrOffset;
+    if(!animateChanges){
+        [self notifyUpdated];
     }
 }
 - (void)setCentrOffset_:(float)centrOffset
@@ -163,13 +188,31 @@ static NSMutableArray* elementsToAnimate;
 
 - (void)setShowTitle:(BOOL)showTitle
 {
-    _showTitle = showTitle;
+    if(_showTitle == showTitle)
+        return;
+    
     if(animateChanges){
-        if(![elementsToAnimate containsObject:self])
-            [elementsToAnimate addObject:self];
-    } else {
-        [self commitChanges];
+        [self notifyPerformForAnimation];
     }
+    _showTitle = showTitle;
+    if(!animateChanges){
+        [self notifyUpdated];
+    }
+}
+
+#pragma mark - Helpers
+- (UIColor*)colorBetweenColor1:(UIColor*)color1 color2:(UIColor*)color2 value:(float)val
+{
+    val = MIN(MAX(val, 0.0), 1.0);
+    CGFloat red1 = 0.0, green1 = 0.0, blue1 = 0.0, alpha1 =0.0;
+    [color1 getRed:&red1 green:&green1 blue:&blue1 alpha:&alpha1];
+    CGFloat red2 = 0.0, green2 = 0.0, blue2 = 0.0, alpha2 =0.0;
+    [color2 getRed:&red2 green:&green2 blue:&blue2 alpha:&alpha2];
+    
+    return [UIColor colorWithRed:(red2-red1)* val + red1
+                           green:(green2-green1)*val + green1
+                            blue:(blue2-blue1)*val + blue1
+                           alpha:(alpha2-alpha1)*val + alpha1];
 }
 
 @end

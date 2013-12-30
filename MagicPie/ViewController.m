@@ -2,83 +2,51 @@
 //  ViewController.m
 //  MagicPie
 //
-//  Created by Alexandr on 30.09.13.
+//  Created by Alexander on 30.12.13.
 //  Copyright (c) 2013 Alexandr Corporation. All rights reserved.
 //
 
 #import "ViewController.h"
-#import "MagicPieLayer.h"
-#import "TestPieLayer.h"
-#import "ExamplePieView.h"
+#import "Example1Controller.h"
+#import "Example2Controller.h"
 
-//#define LOG_ACTION
+@interface ViewController ()
 
-static UIColor* randomColor(){
-    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
-    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-}
+@end
 
 @implementation ViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
 }
 
-- (IBAction)addPressed:(id)sender
+- (void)didReceiveMemoryWarning
 {
-    PieElement* newElem = [PieElement pieElementWithValue:(5 + arc4random() % 10) color:randomColor()];
-//    newElem.showTitle = YES;
-    int insertIndex = self.pieView.layer.values.count;//arc4random() % (pieLayer.values.count + 1);
-    [self.pieView.layer insertValues:@[newElem] atIndexes:@[@(insertIndex)] animated:YES];
-#ifdef LOG_ACTION
-    NSLog(@"Insert values %@ to indixes %@", [self arrDesc:@[newElem]], [self arrDesc:@[@(insertIndex)]]);
-#endif
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)deletePressed:(id)sender
+- (IBAction)example1Pressed:(id)sender
 {
-    if(self.pieView.layer.values.count <= 0)
-        return;
-    
-    int deleteIndex = arc4random() % self.pieView.layer.values.count;
-    [self.pieView.layer deleteValues:@[self.pieView.layer.values[deleteIndex]] animated:YES];
-#ifdef LOG_ACTION
-    NSLog(@"Delete values at indixes %@", [self arrDesc:@[@(deleteIndex)]]);
-#endif
+    Example1Controller* exContr = [Example1Controller new];
+    [self presentModalViewController:exContr animated:YES];
 }
 
-- (IBAction)animateChangeVal:(id)sender
+- (IBAction)example2Pressed:(id)sender
 {
-    int randCount = MAX(MIN(self.pieView.layer.values.count, 2), arc4random() % self.pieView.layer.values.count);
-    NSMutableArray* randIndexes = [NSMutableArray new];
-    for(int i = 0; i < randCount; i++){
-        int randIndx = arc4random() % self.pieView.layer.values.count;
-        [randIndexes addObject:@(randIndx)];
-        int randVal = (5 + arc4random() % 10);
-        [self.pieView.layer.values[randIndx] setVal:randVal];
-    }
-#ifdef LOG_ACTION
-    NSLog(@"Change values at indixes %@", [self arrDesc:randIndexes]);
-#endif
+    Example2Controller* exContr = [Example2Controller new];
+    [self presentModalViewController:exContr animated:YES];
 }
-
-- (IBAction)animateStartEnd
-{
-    float startAngle = arc4random() % 360;
-    float endAngle = arc4random() % 300 + 60 + startAngle;
-    [self.pieView.layer setStartAngle:startAngle endAngle:endAngle animated:YES];
-}
-
-- (NSString*)arrDesc:(NSArray*)arr
-{
-    NSString* str = arr.description;
-    str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
-    str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    return str;
-}
-
 
 @end

@@ -2,12 +2,12 @@
 //  ViewController.h
 //  MagicPie
 //
-//  Created by Alexander on 30.12.13.
+//  Created by Alexandr on 30.09.13.
 //  Copyright (c) 2013 Alexandr Corporation. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface Example1Controller : UIViewController
 
 @end
