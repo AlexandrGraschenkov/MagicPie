@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BD092F0C1806D09000E1C0E6 /* ExamplePieView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD092F0B1806D09000E1C0E6 /* ExamplePieView.m */; };
-		BD092F621807E1B500E1C0E6 /* MagicPieLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD092F611807E1B500E1C0E6 /* MagicPieLayer.m */; };
+		A8AFA913186B6138001AEF6A /* NSArray+descValues.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA912186B6138001AEF6A /* NSArray+descValues.m */; };
+		A8AFA95E186DFF70001AEF6A /* NSMutableArray+pieEx.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA95D186DFF70001AEF6A /* NSMutableArray+pieEx.m */; };
+		A8AFA9631871FEB4001AEF6A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA9611871FEB4001AEF6A /* ViewController.m */; };
+		A8AFA9641871FEB4001AEF6A /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8AFA9621871FEB4001AEF6A /* ViewController.xib */; };
+		A8AFA968187205AA001AEF6A /* Example2PieView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA967187205AA001AEF6A /* Example2PieView.m */; };
+		A8AFA96F1872081D001AEF6A /* Example2Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA96D1872081D001AEF6A /* Example2Controller.m */; };
+		A8AFA9701872081D001AEF6A /* Example2Controller.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8AFA96E1872081D001AEF6A /* Example2Controller.xib */; };
+		A8AFA97318721011001AEF6A /* MyPieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA97218721011001AEF6A /* MyPieElement.m */; };
+		BD092F0C1806D09000E1C0E6 /* Example1PieView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD092F0B1806D09000E1C0E6 /* Example1PieView.m */; };
+		BD092F621807E1B500E1C0E6 /* PieLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD092F611807E1B500E1C0E6 /* PieLayer.m */; };
 		BD0CFE5817F94CC60038FBC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE5717F94CC60038FBC1 /* Foundation.framework */; };
 		BD0CFE5A17F94CC60038FBC1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE5917F94CC60038FBC1 /* CoreGraphics.framework */; };
 		BD0CFE5C17F94CC60038FBC1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE5B17F94CC60038FBC1 /* UIKit.framework */; };
 		BD0CFE6217F94CC60038FBC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD0CFE6017F94CC60038FBC1 /* InfoPlist.strings */; };
 		BD0CFE6417F94CC60038FBC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFE6317F94CC60038FBC1 /* main.m */; };
 		BD0CFE6817F94CC60038FBC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFE6717F94CC60038FBC1 /* AppDelegate.m */; };
-		BD0CFE6E17F94CC60038FBC1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFE6D17F94CC60038FBC1 /* ViewController.m */; };
+		BD0CFE6E17F94CC60038FBC1 /* Example1Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFE6D17F94CC60038FBC1 /* Example1Controller.m */; };
 		BD0CFE7017F94CC60038FBC1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD0CFE6F17F94CC60038FBC1 /* Images.xcassets */; };
 		BD0CFE7717F94CC60038FBC1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE7617F94CC60038FBC1 /* XCTest.framework */; };
 		BD0CFE7817F94CC60038FBC1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0CFE5717F94CC60038FBC1 /* Foundation.framework */; };
@@ -23,7 +31,8 @@
 		BD0CFE8117F94CC60038FBC1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD0CFE7F17F94CC60038FBC1 /* InfoPlist.strings */; };
 		BD0CFE8317F94CC60038FBC1 /* MagicPieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFE8217F94CC60038FBC1 /* MagicPieTests.m */; };
 		BD0CFEEC17FE98150038FBC1 /* TestPieLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0CFEEB17FE98150038FBC1 /* TestPieLayer.m */; };
-		BDD303C618052C5A00380FBA /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDD303C518052C5A00380FBA /* ViewController.xib */; };
+		BDCDD2B318268B8E0006C638 /* PieElement.m in Sources */ = {isa = PBXBuildFile; fileRef = BDCDD2B218268B8E0006C638 /* PieElement.m */; };
+		BDD303C618052C5A00380FBA /* Example1Controller.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDD303C518052C5A00380FBA /* Example1Controller.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,10 +46,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BD092F0A1806D09000E1C0E6 /* ExamplePieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamplePieView.h; sourceTree = "<group>"; };
-		BD092F0B1806D09000E1C0E6 /* ExamplePieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamplePieView.m; sourceTree = "<group>"; };
-		BD092F601807E1B500E1C0E6 /* MagicPieLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicPieLayer.h; sourceTree = "<group>"; };
-		BD092F611807E1B500E1C0E6 /* MagicPieLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicPieLayer.m; sourceTree = "<group>"; };
+		A8AFA911186B6138001AEF6A /* NSArray+descValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+descValues.h"; sourceTree = "<group>"; };
+		A8AFA912186B6138001AEF6A /* NSArray+descValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+descValues.m"; sourceTree = "<group>"; };
+		A8AFA95C186DFF70001AEF6A /* NSMutableArray+pieEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+pieEx.h"; sourceTree = "<group>"; };
+		A8AFA95D186DFF70001AEF6A /* NSMutableArray+pieEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+pieEx.m"; sourceTree = "<group>"; };
+		A8AFA9601871FEB4001AEF6A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A8AFA9611871FEB4001AEF6A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A8AFA9621871FEB4001AEF6A /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		A8AFA966187205AA001AEF6A /* Example2PieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example2PieView.h; sourceTree = "<group>"; };
+		A8AFA967187205AA001AEF6A /* Example2PieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example2PieView.m; sourceTree = "<group>"; };
+		A8AFA96C1872081D001AEF6A /* Example2Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example2Controller.h; sourceTree = "<group>"; };
+		A8AFA96D1872081D001AEF6A /* Example2Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example2Controller.m; sourceTree = "<group>"; };
+		A8AFA96E1872081D001AEF6A /* Example2Controller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example2Controller.xib; sourceTree = "<group>"; };
+		A8AFA97118721011001AEF6A /* MyPieElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPieElement.h; sourceTree = "<group>"; };
+		A8AFA97218721011001AEF6A /* MyPieElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPieElement.m; sourceTree = "<group>"; };
+		BD092F0A1806D09000E1C0E6 /* Example1PieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example1PieView.h; sourceTree = "<group>"; };
+		BD092F0B1806D09000E1C0E6 /* Example1PieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example1PieView.m; sourceTree = "<group>"; };
+		BD092F601807E1B500E1C0E6 /* PieLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieLayer.h; sourceTree = "<group>"; };
+		BD092F611807E1B500E1C0E6 /* PieLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieLayer.m; sourceTree = "<group>"; };
 		BD0CFE5417F94CC60038FBC1 /* MagicPie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicPie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0CFE5717F94CC60038FBC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BD0CFE5917F94CC60038FBC1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -51,8 +74,8 @@
 		BD0CFE6517F94CC60038FBC1 /* MagicPie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MagicPie-Prefix.pch"; sourceTree = "<group>"; };
 		BD0CFE6617F94CC60038FBC1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BD0CFE6717F94CC60038FBC1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BD0CFE6C17F94CC60038FBC1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BD0CFE6D17F94CC60038FBC1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BD0CFE6C17F94CC60038FBC1 /* Example1Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example1Controller.h; sourceTree = "<group>"; };
+		BD0CFE6D17F94CC60038FBC1 /* Example1Controller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Example1Controller.m; sourceTree = "<group>"; };
 		BD0CFE6F17F94CC60038FBC1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BD0CFE7517F94CC60038FBC1 /* MagicPieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicPieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0CFE7617F94CC60038FBC1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -61,7 +84,10 @@
 		BD0CFE8217F94CC60038FBC1 /* MagicPieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MagicPieTests.m; sourceTree = "<group>"; };
 		BD0CFEEA17FE98150038FBC1 /* TestPieLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPieLayer.h; sourceTree = "<group>"; };
 		BD0CFEEB17FE98150038FBC1 /* TestPieLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPieLayer.m; sourceTree = "<group>"; };
-		BDD303C518052C5A00380FBA /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		BDCDD2B118268B8E0006C638 /* PieElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieElement.h; sourceTree = "<group>"; };
+		BDCDD2B218268B8E0006C638 /* PieElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieElement.m; sourceTree = "<group>"; };
+		BDCDD2B418268D400006C638 /* MagicPieLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MagicPieLayer.h; sourceTree = "<group>"; };
+		BDD303C518052C5A00380FBA /* Example1Controller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example1Controller.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,11 +114,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A8AFA914186B6202001AEF6A /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				A8AFA911186B6138001AEF6A /* NSArray+descValues.h */,
+				A8AFA912186B6138001AEF6A /* NSArray+descValues.m */,
+			);
+			name = Help;
+			sourceTree = "<group>";
+		};
+		A8AFA95F1871FD94001AEF6A /* Example1 */ = {
+			isa = PBXGroup;
+			children = (
+				BD092F0A1806D09000E1C0E6 /* Example1PieView.h */,
+				BD092F0B1806D09000E1C0E6 /* Example1PieView.m */,
+				BD0CFE6C17F94CC60038FBC1 /* Example1Controller.h */,
+				BD0CFE6D17F94CC60038FBC1 /* Example1Controller.m */,
+				BDD303C518052C5A00380FBA /* Example1Controller.xib */,
+			);
+			name = Example1;
+			sourceTree = "<group>";
+		};
+		A8AFA9651872058C001AEF6A /* Example2 */ = {
+			isa = PBXGroup;
+			children = (
+				A8AFA966187205AA001AEF6A /* Example2PieView.h */,
+				A8AFA967187205AA001AEF6A /* Example2PieView.m */,
+				A8AFA97118721011001AEF6A /* MyPieElement.h */,
+				A8AFA97218721011001AEF6A /* MyPieElement.m */,
+				A8AFA96C1872081D001AEF6A /* Example2Controller.h */,
+				A8AFA96D1872081D001AEF6A /* Example2Controller.m */,
+				A8AFA96E1872081D001AEF6A /* Example2Controller.xib */,
+			);
+			name = Example2;
+			sourceTree = "<group>";
+		};
 		BD092F5F1807E1B500E1C0E6 /* MagicPieLayer */ = {
 			isa = PBXGroup;
 			children = (
-				BD092F601807E1B500E1C0E6 /* MagicPieLayer.h */,
-				BD092F611807E1B500E1C0E6 /* MagicPieLayer.m */,
+				BDCDD2B418268D400006C638 /* MagicPieLayer.h */,
+				BD092F601807E1B500E1C0E6 /* PieLayer.h */,
+				BD092F611807E1B500E1C0E6 /* PieLayer.m */,
+				A8AFA95C186DFF70001AEF6A /* NSMutableArray+pieEx.h */,
+				A8AFA95D186DFF70001AEF6A /* NSMutableArray+pieEx.m */,
+				BDCDD2B118268B8E0006C638 /* PieElement.h */,
+				BDCDD2B218268B8E0006C638 /* PieElement.m */,
 			);
 			path = MagicPieLayer;
 			sourceTree = SOURCE_ROOT;
@@ -140,13 +206,14 @@
 			isa = PBXGroup;
 			children = (
 				BD092F5F1807E1B500E1C0E6 /* MagicPieLayer */,
-				BD092F0A1806D09000E1C0E6 /* ExamplePieView.h */,
-				BD092F0B1806D09000E1C0E6 /* ExamplePieView.m */,
+				A8AFA95F1871FD94001AEF6A /* Example1 */,
+				A8AFA9651872058C001AEF6A /* Example2 */,
 				BD0CFE6617F94CC60038FBC1 /* AppDelegate.h */,
 				BD0CFE6717F94CC60038FBC1 /* AppDelegate.m */,
-				BD0CFE6C17F94CC60038FBC1 /* ViewController.h */,
-				BD0CFE6D17F94CC60038FBC1 /* ViewController.m */,
-				BDD303C518052C5A00380FBA /* ViewController.xib */,
+				A8AFA9601871FEB4001AEF6A /* ViewController.h */,
+				A8AFA9611871FEB4001AEF6A /* ViewController.m */,
+				A8AFA9621871FEB4001AEF6A /* ViewController.xib */,
+				A8AFA914186B6202001AEF6A /* Help */,
 				BD092F631807E21E00E1C0E6 /* Speed test */,
 				BD0CFE6F17F94CC60038FBC1 /* Images.xcassets */,
 				BD0CFE5E17F94CC60038FBC1 /* Supporting Files */,
@@ -263,8 +330,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD0CFE7017F94CC60038FBC1 /* Images.xcassets in Resources */,
-				BDD303C618052C5A00380FBA /* ViewController.xib in Resources */,
+				BDD303C618052C5A00380FBA /* Example1Controller.xib in Resources */,
+				A8AFA9641871FEB4001AEF6A /* ViewController.xib in Resources */,
 				BD0CFE6217F94CC60038FBC1 /* InfoPlist.strings in Resources */,
+				A8AFA9701872081D001AEF6A /* Example2Controller.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,11 +352,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD092F621807E1B500E1C0E6 /* MagicPieLayer.m in Sources */,
-				BD0CFE6E17F94CC60038FBC1 /* ViewController.m in Sources */,
+				A8AFA95E186DFF70001AEF6A /* NSMutableArray+pieEx.m in Sources */,
+				BD092F621807E1B500E1C0E6 /* PieLayer.m in Sources */,
+				A8AFA97318721011001AEF6A /* MyPieElement.m in Sources */,
+				A8AFA913186B6138001AEF6A /* NSArray+descValues.m in Sources */,
+				A8AFA96F1872081D001AEF6A /* Example2Controller.m in Sources */,
+				BD0CFE6E17F94CC60038FBC1 /* Example1Controller.m in Sources */,
+				A8AFA9631871FEB4001AEF6A /* ViewController.m in Sources */,
 				BD0CFE6817F94CC60038FBC1 /* AppDelegate.m in Sources */,
 				BD0CFEEC17FE98150038FBC1 /* TestPieLayer.m in Sources */,
-				BD092F0C1806D09000E1C0E6 /* ExamplePieView.m in Sources */,
+				BD092F0C1806D09000E1C0E6 /* Example1PieView.m in Sources */,
+				BDCDD2B318268B8E0006C638 /* PieElement.m in Sources */,
+				A8AFA968187205AA001AEF6A /* Example2PieView.m in Sources */,
 				BD0CFE6417F94CC60038FBC1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,12 +484,14 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Sk#rpion (C9YH3ELEA8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MagicPie/MagicPie-Prefix.pch";
 				INFOPLIST_FILE = "MagicPie/MagicPie-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -424,12 +502,14 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Sk#rpion (C9YH3ELEA8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MagicPie/MagicPie-Prefix.pch";
 				INFOPLIST_FILE = "MagicPie/MagicPie-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

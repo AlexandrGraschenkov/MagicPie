@@ -6,23 +6,23 @@
 //  Copyright (c) 2013 Alexandr Corporation. All rights reserved.
 //
 
-#import "ExamplePieView.h"
+#import "Example1PieView.h"
 #import "MagicPieLayer.h"
 
-@interface ExamplePieView ()
+@interface Example1PieView ()
 {
     CGPoint panNormalizedVector;
-    MagicPieElement* panPieElem;
+    PieElement* panPieElem;
     float panStartCenterOffsetElem;
     float panStartDotProduct;
 }
 @end
 
-@implementation ExamplePieView
+@implementation Example1PieView
 
 + (Class)layerClass
 {
-    return [MagicPieLayer class];
+    return [PieLayer class];
 }
 
 - (id)init
@@ -57,7 +57,7 @@
     self.layer.maxRadius = 120;
     self.layer.minRadius = 30;
     self.layer.animationDuration = 0.6;
-    self.layer.showTitles = ShowTitlesIfEnable;
+    self.layer.showTitles = ShowTitlesNever;
     if ([self.layer.self respondsToSelector:@selector(setContentsScale:)])
     {
         self.layer.contentsScale = [[UIScreen mainScreen] scale];
@@ -74,23 +74,15 @@
     [self addGestureRecognizer:pan];
 }
 
-- (UIColor*)randomColor
-{
-    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
-    UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-    return color;
-}
-
 - (void)handleTap:(UITapGestureRecognizer*)tap
 {
     if(tap.state != UIGestureRecognizerStateEnded)
         return;
     
     CGPoint pos = [tap locationInView:tap.view];
-    MagicPieElement* elem = [self.layer pieElemInPoint:pos];
-    elem.color = [self randomColor];
+    PieElement* elem = [self.layer pieElemInPoint:pos];
+    if(elem && _elemTapped)
+        _elemTapped(elem);
 }
 
 - (void)handlePan:(UIPanGestureRecognizer*)pan
@@ -100,7 +92,6 @@
     if(pan.state == UIGestureRecognizerStateBegan){
         panPieElem = [self.layer pieElemInPoint:pos];
         panStartCenterOffsetElem = panPieElem.centrOffset;
-        panPieElem.animateChanges = NO;
         
         CGPoint vec = CGPointMake(pos.x - center.x, pos.y - center.y);
         float distance = sqrtf(pow(vec.x, 2.0) + pow(vec.y, 2.0));
@@ -111,7 +102,6 @@
         float dotProduct = currPoint.x * panNormalizedVector.x + currPoint.y * panNormalizedVector.y;
         panPieElem.centrOffset = MAX(0.0, dotProduct - panStartDotProduct + panStartCenterOffsetElem);
     } else if(pan.state == UIGestureRecognizerStateEnded){
-        panPieElem.animateChanges = YES;
         panPieElem = nil;
     }
 }

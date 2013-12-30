@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  Example2Controller.h
 //  MagicPie
 //
 //  Created by Alexander on 30.12.13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface Example2Controller : UIViewController
 
 @end

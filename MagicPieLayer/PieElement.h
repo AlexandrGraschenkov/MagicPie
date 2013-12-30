@@ -1,7 +1,8 @@
 //
-// MagicPieLayer.h
+// PieElement.h
 // MagicPie
 //
+// Created by Alexandr on 03.11.13.
 // Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,10 +24,17 @@
 // THE SOFTWARE.
 //
 
-#ifndef MagicPie_MagicPieLayer_h
-#define MagicPie_MagicPieLayer_h
+#import <Foundation/Foundation.h>
 
-#import "PieLayer.h"
-#import "PieElement.h"
+@interface PieElement : NSObject <NSCopying>
 
-#endif
++ (instancetype)pieElementWithValue:(float)val color:(UIColor*)color;
+
++ (void)animateChanges:(void(^)())changesBlock;
+
+@property (nonatomic, assign) float val;
+@property (nonatomic, strong) UIColor* color;
+@property (nonatomic, assign) float centrOffset;
+@property (nonatomic, assign) BOOL showTitle;//default NO
+
+@end
