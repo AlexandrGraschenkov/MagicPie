@@ -1,7 +1,7 @@
 MagicPie
 ========
 
-Amazing animations available with MagicPie!
+Powerfull pie layer for creating your own pie view. PieLayer provide great animation with simple usage.
 
 <img src="https://github.com/Sk0rpion/MagicPie/blob/master/MagicPie.gif?raw=true" alt="Demo" width="359" height="704" />
 
