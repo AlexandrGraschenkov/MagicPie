@@ -11,7 +11,11 @@ Powerfull pie layer for creating your own pie view. PieLayer provide great anima
 
 ## Installation
 
-Copy `MagicPieLayer` folder in project.
+Edit your `PodFile` to include the following line:
+
+```
+pod 'MagicPie'
+```
 Have a fun!
 
 ## Example Usage
