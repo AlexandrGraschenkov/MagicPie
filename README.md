@@ -1,12 +1,18 @@
 MagicPie
 ========
 
-Powerfull pie layer for creating your own pie view. PieLayer provide great animation with simple usage.
+Powerful pie layer for creating your own pie view. PieLayer provide great animation with simple usage.
+
+The power of this control that you don't worry with correct display animation. If you add some slices, when alredy runing remove slice animation, it will correct displayed. That's amazing! And this control dont use delegates. I love delegates, but in this case I think it's excess. 
 
 <img src="https://github.com/Sk0rpion/MagicPie/blob/master/MagicPie.gif?raw=true" alt="Demo" width="359" height="704" />
 
 
 <img src="https://github.com/Sk0rpion/MagicPie/blob/master/MagicPie2.gif?raw=true" alt="Demo" width="359" height="704" />
+
+Be creative =)
+
+<img src="https://github.com/Sk0rpion/MagicPie/blob/master/MagicPie3.gif?raw=true" alt="Demo" width="359" height="704" />
 
 
 ## Installation
