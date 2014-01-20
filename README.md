@@ -3,7 +3,7 @@ MagicPie
 
 Powerful pie layer for creating your own pie view. PieLayer provide great animation with simple usage.
 
-The power of this control that you don't worry with correct display animation. If you add some slices, when alredy runing remove slice animation, it will correct displayed. That's amazing! And this control dont use delegates. I love delegates, but in this case I think it's excess. 
+The main advantage of that control that there is no worry about displaying of animation. Animation will display correctly even if you will add new elements during execution of another slice deleting animation. That's amazing! And here is no delegates. I like delegates, but in this case I think they are excess.
 
 <img src="https://github.com/Sk0rpion/MagicPie/blob/master/MagicPie.gif?raw=true" alt="Demo" width="359" height="704" />
 
