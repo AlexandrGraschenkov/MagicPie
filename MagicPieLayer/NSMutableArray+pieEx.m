@@ -45,7 +45,9 @@
 - (void)insertSortedObjects:(NSArray*)objects indexes:(NSArray*)indexes
 {
     for(int i = 0; i < indexes.count; i++){
-        [self insertObject:objects[i] atIndex:[indexes[i] integerValue]];
+        //after each insert, each next index must be displaced
+        int insertIdx = [indexes[i] integerValue] - i;
+        [self insertObject:objects[i] atIndex:insertIdx];
     }
 }
 

@@ -154,7 +154,7 @@ static NSString * const _animationValuesKey = @"animationValues";
     [sortedIndexes sortUsingSelector:@selector(compare:)];
     
     NSMutableArray* newValues = [NSMutableArray arrayWithArray:self.values];
-    [newValues insertSortedObjects:sortedArray indexes:indexes];
+    [newValues insertSortedObjects:sortedArray indexes:sortedIndexes];
     
     if(!animated || ![self performDelayedAnimation]){
         for(PieElement* elem in array){
