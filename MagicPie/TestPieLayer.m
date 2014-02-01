@@ -31,22 +31,22 @@ typedef enum PieAction
 + (void)timerAction:(NSTimer*)timer
 {
     NSMutableString* timerCountStr = timer.userInfo[@"count"];
-    int count = [timerCountStr integerValue];
+    NSUInteger count = [timerCountStr integerValue];
     if(count <= 0){
         [timer invalidate];
         return;
     } else {
         count--;
-        [timerCountStr setString:[NSString stringWithFormat:@"%d", count]];
+        [timerCountStr setString:[NSString stringWithFormat:@"%lu", count]];
     }
     
     void(^actionBlock)(NSString* actionDesc) = timer.userInfo[@"actionBlock"];
     PieLayer* pieLayer = timer.userInfo[@"pieLayer"];
     if(actionBlock){
-        int valuesCount = pieLayer.values.count;
+        NSUInteger valuesCount = pieLayer.values.count;
         NSString* actionDesc = [self runRandomActionWithPie:pieLayer];
         if(actionDesc){
-            actionDesc = [NSString stringWithFormat:@"Curr values count %d. %@", valuesCount, actionDesc];
+            actionDesc = [NSString stringWithFormat:@"Curr values count %lu. %@", valuesCount, actionDesc];
             actionBlock(actionDesc);
         }
     }else
@@ -62,13 +62,13 @@ typedef enum PieAction
             return nil;
         
         [pieLayer addValues:arr animated:YES];
-        return [NSString stringWithFormat:@"Add %d elements", arr.count];
+        return [NSString stringWithFormat:@"Add %lu elements", arr.count];
     } else if(action == PieActionInsert){
         NSArray* arr = [self randArr];
         if(arr.count == 0)
             return nil;
         
-        int count = pieLayer.values.count;
+        NSUInteger count = pieLayer.values.count;
         NSMutableArray* indxArr = [NSMutableArray array];
         for(int i = 0; i < arr.count; i++){
             int indx = arc4random() % (count+1);
@@ -77,7 +77,7 @@ typedef enum PieAction
                 count++;
         }
         [pieLayer insertValues:arr atIndexes:indxArr animated:YES];
-        return [NSString stringWithFormat:@"Insert %d elements at indexes: %@", arr.count, [self arrDesc:indxArr]];
+        return [NSString stringWithFormat:@"Insert %lu elements at indexes: %@", arr.count, [self arrDesc:indxArr]];
     } else if(action == PieActionDelete) {
         if(pieLayer.values.count == 0)
             return nil;

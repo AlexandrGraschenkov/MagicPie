@@ -71,7 +71,7 @@
 - (IBAction)animateChangeVal:(id)sender
 {
     if(self.pieView.layer.values.count == 0)return;
-    int randCount = MAX(MIN(self.pieView.layer.values.count, 2), arc4random() % self.pieView.layer.values.count);
+    NSUInteger randCount = MAX(MIN(self.pieView.layer.values.count, 2), arc4random() % self.pieView.layer.values.count);
     NSMutableArray* randIndexes = [NSMutableArray new];
     NSMutableArray* changeValArr = [NSMutableArray new];
     [PieElement animateChanges:^{

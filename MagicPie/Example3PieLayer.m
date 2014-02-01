@@ -26,7 +26,7 @@
     float endRadius = MIN(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
     float startRadius = self.minRadius;
     
-    int lvlCount = self.colorsArr.count;
+    NSUInteger lvlCount = self.colorsArr.count;
     float levelWidth = (endRadius - startRadius - (lvlCount-1)*indent) / lvlCount;
     float currRadius = startRadius;
     
