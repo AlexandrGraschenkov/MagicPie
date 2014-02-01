@@ -104,10 +104,10 @@ static NSString * const _animationValuesKey = @"animationValues";
 #pragma mark - Adding, inserting and deleting
 - (void)addValues:(NSArray *)addingNewValues animated:(BOOL)animated
 {
-    int count = addingNewValues.count;
-    int currCount = self.values.count;
+    NSInteger count = addingNewValues.count;
+    NSInteger currCount = self.values.count;
     NSMutableArray* indexes = [NSMutableArray arrayWithCapacity:addingNewValues.count];
-    for(int i = 0; i < count; i++){
+    for(NSInteger i = 0; i < count; i++){
         [indexes addObject:@(i+currCount)];
     }
     [self insertValues:addingNewValues atIndexes:indexes animated:animated];
@@ -130,7 +130,7 @@ static NSString * const _animationValuesKey = @"animationValues";
     animationBeginState = [[NSMutableArray alloc] initWithArray:currentValues copyItems:YES];
     animationEndState = [NSMutableArray arrayWithArray:self.values];
     for(NSNumber* delIdxNum in animationDeletingIndexes){
-        int delIdx = delIdxNum.integerValue;
+        NSInteger delIdx = delIdxNum.integerValue;
         PieElement* elem = [currentValues[delIdx] copy];
         [elem setVal_:0.0];
         elem.titleAlpha = 0.0;
@@ -143,7 +143,7 @@ static NSString * const _animationValuesKey = @"animationValues";
 
 - (void)insertValues:(NSArray *)array atIndexes:(NSArray *)indexes animated:(BOOL)animated
 {
-    NSAssert2(array.count == indexes.count, @"Array sizes must be equal: values.count = %d; indexes.count = %d;", array.count, indexes.count);
+    NSAssert2(array.count == indexes.count, @"Array sizes must be equal: values.count = %d; indexes.count = %d;", (int)array.count, (int)indexes.count);
     for(PieElement* elem in array){
         [elem addedToPieLayer:self];
     }
@@ -232,7 +232,7 @@ static NSString * const _animationValuesKey = @"animationValues";
 
 - (void)animateFromValues:(NSArray*)fromValues toValues:(NSArray*)toValues timingFunction:(NSString*)timingFunction
 {
-    NSAssert2(fromValues.count == toValues.count, @"Array sizes must be equal: fromValues.count = %d; toValues.count = %d;", fromValues.count, toValues.count);
+    NSAssert2(fromValues.count == toValues.count, @"Array sizes must be equal: fromValues.count = %d; toValues.count = %d;", (int)fromValues.count, (int)toValues.count);
     float fromSum = [[fromValues valueForKeyPath:@"@sum.val"] floatValue];
     float toSum = [[toValues valueForKeyPath:@"@sum.val"] floatValue];
     if(fromSum <= 0 || toSum <= 0){
