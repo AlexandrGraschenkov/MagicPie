@@ -44,10 +44,10 @@
 
 - (void)insertSortedObjects:(NSArray*)objects indexes:(NSArray*)indexes
 {
-    int decrementIdx = 0;
-    for(int i = 0; i < indexes.count; i++){
+    NSInteger decrementIdx = 0;
+    for(NSInteger i = 0; i < indexes.count; i++){
         //after each insert, each next index must be displaced
-        int insertIdx = [indexes[i] integerValue] - decrementIdx;
+        NSInteger insertIdx = [indexes[i] integerValue] - decrementIdx;
         if(insertIdx < self.count)
             decrementIdx++;
         [self insertObject:objects[i] atIndex:insertIdx];
@@ -66,11 +66,11 @@
 - (void)updateIndexesWithUnusedIndexes:(NSArray*)unusedIndexes
 {
     unusedIndexes = [unusedIndexes sortedArrayUsingSelector:@selector(compare:)];
-    int indexesCount = self.count;
+    NSInteger indexesCount = self.count;
     for(NSNumber* unusedIdxNum in unusedIndexes){
-        int unusedIdx = unusedIdxNum.integerValue;
-        for(int i = 0; i < indexesCount; i++){
-            int idx = [self[i] integerValue];
+        NSInteger unusedIdx = unusedIdxNum.integerValue;
+        for(NSInteger i = 0; i < indexesCount; i++){
+            NSInteger idx = [self[i] integerValue];
             if(idx >= unusedIdx)
                 self[i] = @(idx+1);
         }
