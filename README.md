@@ -18,10 +18,15 @@ Be creative =)
 ## Installation
 
 Edit your `PodFile` to include the following line:
-
 ```
 pod 'MagicPie'
 ```
+
+Then import the main header.
+```
+#import <MagicPieLayer.h>
+```
+
 Have a fun!
 
 ## Example Usage
