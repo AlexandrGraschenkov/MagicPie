@@ -12,7 +12,9 @@
 #import "PieLayer.h"
 
 @interface Example2Controller ()
-
+{
+    BOOL showPercent;
+}
 @property (nonatomic, weak) IBOutlet Example2PieView* pieView;
 
 @end
@@ -31,10 +33,25 @@
     }
     
     //mutch easier do this with array outside
-    pieView.layer.transformTitleBlock = ^(PieElement* elem){
+    showPercent = NO;
+    pieView.layer.transformTitleBlock = ^(PieElement* elem, float percent){
         return [(MyPieElement*)elem title];
     };
     pieView.layer.showTitles = ShowTitlesAlways;
+}
+
+- (IBAction)changePercentValuesPressed:(id)sender
+{
+    showPercent = !showPercent;
+    if(showPercent){
+        pieView.layer.transformTitleBlock = ^(PieElement* elem, float percent){
+            return [NSString stringWithFormat:@"%ld%%", (long)percent];
+        };
+    } else {
+        pieView.layer.transformTitleBlock = ^(PieElement* elem, float percent){
+            return [(MyPieElement*)elem title];
+        };
+    }
 }
 
 - (UIColor*)randomColor

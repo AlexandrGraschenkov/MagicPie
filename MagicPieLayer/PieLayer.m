@@ -56,15 +56,18 @@ static NSString * const _animationValuesKey = @"animationValues";
 }
 @property (nonatomic, strong) UIFont* font;
 @property (nonatomic, strong, readwrite) NSArray* values;
+// present while performing animations
+@property (nonatomic, strong) NSArray* presentValues;
+
 @property (nonatomic, strong) NSMutableArray* deletingIndexes;
 @property (nonatomic, assign) BOOL isFakeAngleAnimation;
-@property (nonatomic, strong) NSMutableArray* animationBeginState;//perform animation
+@property (nonatomic, strong) NSMutableArray* animationBeginState; //perform animation
 @property (nonatomic, strong) NSMutableArray* animationEndState;
 @property (nonatomic, strong) NSMutableArray* animationDeletingIndexes;
 @end
 
 @implementation PieLayer
-@dynamic values, deletingIndexes, maxRadius, minRadius, font, transformTitleBlock, startAngle, endAngle, isFakeAngleAnimation, showTitles;
+@dynamic values, presentValues, deletingIndexes, maxRadius, minRadius, font, transformTitleBlock, startAngle, endAngle, isFakeAngleAnimation, showTitles;
 @synthesize animationDuration, animationBeginState, animationEndState, animationDeletingIndexes;
 
 #pragma mark - Init
@@ -82,6 +85,15 @@ static NSString * const _animationValuesKey = @"animationValues";
     self = [super initWithCoder:aDecoder];
     if(self){
         [self setup];
+    }
+    return self;
+}
+
+- (id)initWithLayer:(id)layer
+{
+    self = [super initWithLayer:layer];
+    if(self) {
+        self.presentValues = nil;
     }
     return self;
 }
@@ -164,6 +176,9 @@ static NSString * const _animationValuesKey = @"animationValues";
         self.values = [NSArray arrayWithArray:newValues];
         return;
     }
+    if(!self.presentValues) {
+        self.presentValues = [[NSArray alloc] initWithArray:animationBeginState copyItems:YES];
+    }
     self.values = [NSArray arrayWithArray:newValues];
     
     [sortedIndexes updateIndexesWithUnusedIndexes:animationDeletingIndexes];
@@ -190,6 +205,9 @@ static NSString * const _animationValuesKey = @"animationValues";
         [self removeAnimationForKey:_animationValuesKey];
         self.values = [NSArray arrayWithArray:newValues];
         return;
+    }
+    if(!self.presentValues) {
+        self.presentValues = [[NSArray alloc] initWithArray:animationBeginState copyItems:YES];
     }
     self.values = [NSArray arrayWithArray:newValues];
     
@@ -226,6 +244,8 @@ static NSString * const _animationValuesKey = @"animationValues";
     animationBeginState = nil;
     animationEndState = nil;
     animationDeletingIndexes = nil;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setPresentValues:) object:nil];
+    [self performSelector:@selector(setPresentValues:) withObject:nil afterDelay:0];
 }
 
 #pragma mark - Animate setters
@@ -236,7 +256,7 @@ static NSString * const _animationValuesKey = @"animationValues";
     float fromSum = [[fromValues valueForKeyPath:@"@sum.val"] floatValue];
     float toSum = [[toValues valueForKeyPath:@"@sum.val"] floatValue];
     if(fromSum <= 0 || toSum <= 0){
-        [self animateStartAngleEndAngleFillUp:(fromSum==0) timingFunction:timingFunction];
+        [self animateStartAngleEndAngleFillUp:(fromSum==0) values:fromValues timingFunction:timingFunction];
         return;
     }
     
@@ -272,7 +292,7 @@ static NSString * const _animationValuesKey = @"animationValues";
     [self addAnimation:valuesAnim forKey:_animationValuesKey];
 }
 
-- (void)animateStartAngleEndAngleFillUp:(BOOL)fillUp timingFunction:(NSString*)timingFunction
+- (void)animateStartAngleEndAngleFillUp:(BOOL)fillUp values:(NSArray*)values timingFunction:(NSString*)timingFunction
 {
     //make illusion deleting/inserting values
     //simple run animation change start and end angle
@@ -284,16 +304,15 @@ static NSString * const _animationValuesKey = @"animationValues";
                          toEndAngle:self.endAngle];
         self.isFakeAngleAnimation = YES;
     } else {
-        [self animateFromStartAngle:(isAnimating?[self.presentationLayer startAngle] : self.startAngle)
+        [self animateFromStartAngle:isAnimating?[self.presentationLayer startAngle] : self.startAngle
                        toStartAngle:self.startAngle
-                       fromEndAngle:(isAnimating?[self.presentationLayer endAngle] : self.endAngle)
+                       fromEndAngle:isAnimating?[self.presentationLayer endAngle] : self.endAngle
                          toEndAngle:self.startAngle];
         self.isFakeAngleAnimation = YES;
         
         //we don't have values in self.values, so make animation with 2 key for save values when animating
-        NSArray* currValues = [self.presentationLayer values];
         CAKeyframeAnimation* valuesAnim = [CAKeyframeAnimation animationWithKeyPath:@"values"];
-        valuesAnim.values = @[currValues, currValues];
+        valuesAnim.values = @[values, values];
         valuesAnim.timingFunction = [CAMediaTimingFunction functionWithName:timingFunction];
         valuesAnim.duration = animationDuration;
         valuesAnim.repeatCount = 1;
@@ -301,7 +320,7 @@ static NSString * const _animationValuesKey = @"animationValues";
         valuesAnim.delegate = self;
         
         NSMutableArray* deletingIndexes = [NSMutableArray array];
-        for(int i = 0; i < currValues.count; i++)
+        for(int i = 0; i < values.count; i++)
             [deletingIndexes addObject:@(i)];
         self.deletingIndexes = deletingIndexes;
         [self removeAnimationForKey:_animationValuesKey];
@@ -424,18 +443,22 @@ static NSString * const _animationValuesKey = @"animationValues";
 #pragma mark - Redraw
 + (BOOL)needsDisplayForKey:(NSString *)key
 {
-    if( [key isEqualToString:@"values"] || [key isEqualToString:@"maxRadius"] || [key isEqualToString:@"minRadius"] || [key isEqualToString:@"startAngle"] || [key isEqualToString:@"endAngle"] || [key isEqualToString:@"showTitles"])
+    if( [key isEqualToString:@"values"] || [key isEqualToString:@"maxRadius"] || [key isEqualToString:@"minRadius"] || [key isEqualToString:@"startAngle"] || [key isEqualToString:@"endAngle"] || [key isEqualToString:@"showTitles"] || [key isEqualToString:@"transformTitleBlock"]) {
         return YES;
+    }
     
     return [super needsDisplayForKey:key];
 }
 
 - (void)drawInContext:(CGContextRef)ctx
 {
-    if(self.values.count == 0 || self.minRadius >= self.maxRadius)
+    NSArray *values = self.presentValues?: self.values;
+    if(self.presentValues)
+        NSLog(@"%@", @"!!! 1231231231233 !!!");
+    if(values.count == 0 || self.minRadius >= self.maxRadius)
         return;
     CGPoint centr = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
-    float sum = [[self.values valueForKeyPath:@"@sum.val"] floatValue];
+    float sum = [[values valueForKeyPath:@"@sum.val"] floatValue];
     if(sum <= 0)
         return;
     
@@ -445,7 +468,9 @@ static NSString * const _animationValuesKey = @"animationValues";
     
     float angleStart = self.startAngle * M_PI / 180.0;
     float angleInterval = (self.endAngle - self.startAngle) * M_PI / 180.0;
-    for(PieElement* elem in self.values){
+    BOOL clockWise = self.startAngle > self.endAngle;
+    
+    for(PieElement* elem in values){
         float angleEnd = angleStart + angleInterval * elem.val / sum;
         float centrAngle = (angleEnd + angleStart) * 0.5;
         CGPoint centrWithOffset = elem.centrOffset > 0? CGPointMake(cosf(centrAngle) * elem.centrOffset + centr.x, sinf(centrAngle) * elem.centrOffset + centr.y) : centr;
@@ -456,9 +481,9 @@ static NSString * const _animationValuesKey = @"animationValues";
         
         CGContextBeginPath(ctx);
         CGContextMoveToPoint(ctx, minRadiusStart.x, minRadiusStart.y);
-        CGContextAddArc(ctx, centrWithOffset.x, centrWithOffset.y, self.minRadius, angleStart, angleEnd, NO);
+        CGContextAddArc(ctx, centrWithOffset.x, centrWithOffset.y, self.minRadius, angleStart, angleEnd, clockWise);
         CGContextAddLineToPoint(ctx, maxRadiusEnd.x, maxRadiusEnd.y);
-        CGContextAddArc(ctx, centrWithOffset.x, centrWithOffset.y, self.maxRadius, angleEnd, angleStart, YES);
+        CGContextAddArc(ctx, centrWithOffset.x, centrWithOffset.y, self.maxRadius, angleEnd, angleStart, !clockWise);
         CGContextClosePath(ctx);
         CGContextClip(ctx);
         
@@ -484,11 +509,13 @@ static NSString * const _animationValuesKey = @"animationValues";
 #pragma mark Titles
 - (void)drawValuesText:(CGContextRef)ctx sumValues:(float)sum
 {
+    NSArray *values = self.presentValues?: self.values;
     CGContextSetShadowWithColor(ctx, CGSizeMake(0,1), 3, [UIColor blackColor].CGColor);
     
     float angleStart = self.startAngle * M_PI / 180.0;
     float angleInterval = (self.endAngle - self.startAngle) * M_PI / 180.0;
-    for(PieElement* elem in self.values){
+    
+    for(PieElement* elem in values){
         float angleEnd = angleStart + angleInterval * elem.val / sum;
         BOOL showTitle = elem.showTitle || self.showTitles == ShowTitlesAlways;
         if(!showTitle || elem.titleAlpha <= 0.01){
@@ -500,7 +527,10 @@ static NSString * const _animationValuesKey = @"animationValues";
         CGContextSetFillColorWithColor(ctx, color.CGColor);
         
         float angle = (angleStart + angleEnd) / 2.0;
-        NSString* text = self.transformTitleBlock? self.transformTitleBlock(elem) : [NSString stringWithFormat:@"%.2f", elem.val];
+        float percent = 0.0;
+        if(sum != 0.0)
+            percent = 100.0 * elem.val / sum;
+        NSString* text = self.transformTitleBlock? self.transformTitleBlock(elem, percent) : [NSString stringWithFormat:@"%.2f", elem.val];
         float radius = self.maxRadius + elem.centrOffset;
         [self drawText:text angle:-angle radius:radius context:ctx];
         
