@@ -453,8 +453,6 @@ static NSString * const _animationValuesKey = @"animationValues";
 - (void)drawInContext:(CGContextRef)ctx
 {
     NSArray *values = self.presentValues?: self.values;
-    if(self.presentValues)
-        NSLog(@"%@", @"!!! 1231231231233 !!!");
     if(values.count == 0 || self.minRadius >= self.maxRadius)
         return;
     CGPoint centr = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
