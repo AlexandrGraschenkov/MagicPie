@@ -10,6 +10,7 @@
 #import "Example1Controller.h"
 #import "Example2Controller.h"
 #import "Example3Controller.h"
+#import "Example4Controller.h"
 
 @interface ViewController ()
 
@@ -55,5 +56,12 @@
     Example3Controller* exContr = [Example3Controller new];
     [self presentModalViewController:exContr animated:YES];
 }
+
+- (IBAction)example4Pressed:(id)sender
+{
+    Example4Controller* exContr = [Example4Controller new];
+    [self presentModalViewController:exContr animated:YES];
+}
+
 
 @end

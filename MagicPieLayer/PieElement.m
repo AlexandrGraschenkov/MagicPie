@@ -53,6 +53,15 @@ static BOOL animateChanges;
     return result;
 }
 
++ (instancetype)pieElementWithValue:(float)val indexValue:(NSInteger*)index color:(UIColor*)color
+{
+    PieElement* result = [self new];
+    result->_val = val;
+    result->_color = color;
+    result->_index = index;
+    return result;
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
     PieElement *another = [[[self class] allocWithZone:zone] init];

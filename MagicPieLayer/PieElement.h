@@ -30,8 +30,11 @@
 
 + (instancetype)pieElementWithValue:(float)val color:(UIColor*)color;
 
++ (instancetype)pieElementWithValue:(float)val indexValue:(NSInteger*)index color:(UIColor*)color;
+
 + (void)animateChanges:(void(^)())changesBlock;
 
+@property (nonatomic, assign) NSInteger* index;
 @property (nonatomic, assign) float val;
 @property (nonatomic, strong) UIColor* color;
 @property (nonatomic, assign) float centrOffset;
