@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		877D1D35193D99DC0040AB4A /* Example4PieView.m in Sources */ = {isa = PBXBuildFile; fileRef = 877D1D2F193D99DC0040AB4A /* Example4PieView.m */; };
+		877D1D36193D99DC0040AB4A /* MyPieElemntExample4.m in Sources */ = {isa = PBXBuildFile; fileRef = 877D1D31193D99DC0040AB4A /* MyPieElemntExample4.m */; };
+		877D1D37193D99DC0040AB4A /* Example4Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 877D1D33193D99DC0040AB4A /* Example4Controller.m */; };
+		877D1D38193D99DC0040AB4A /* Example4Controller.xib in Resources */ = {isa = PBXBuildFile; fileRef = 877D1D34193D99DC0040AB4A /* Example4Controller.xib */; };
 		A8AFA913186B6138001AEF6A /* NSArray+descValues.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA912186B6138001AEF6A /* NSArray+descValues.m */; };
 		A8AFA95E186DFF70001AEF6A /* NSMutableArray+pieEx.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA95D186DFF70001AEF6A /* NSMutableArray+pieEx.m */; };
 		A8AFA9631871FEB4001AEF6A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA9611871FEB4001AEF6A /* ViewController.m */; };
@@ -52,6 +56,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		877D1D2E193D99C80040AB4A /* Example4PieView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example4PieView.h; sourceTree = "<group>"; };
+		877D1D2F193D99DC0040AB4A /* Example4PieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example4PieView.m; sourceTree = "<group>"; };
+		877D1D30193D99DC0040AB4A /* MyPieElemntExample4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPieElemntExample4.h; sourceTree = "<group>"; };
+		877D1D31193D99DC0040AB4A /* MyPieElemntExample4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPieElemntExample4.m; sourceTree = "<group>"; };
+		877D1D32193D99DC0040AB4A /* Example4Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example4Controller.h; sourceTree = "<group>"; };
+		877D1D33193D99DC0040AB4A /* Example4Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example4Controller.m; sourceTree = "<group>"; };
+		877D1D34193D99DC0040AB4A /* Example4Controller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example4Controller.xib; sourceTree = "<group>"; };
 		A8AFA911186B6138001AEF6A /* NSArray+descValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+descValues.h"; sourceTree = "<group>"; };
 		A8AFA912186B6138001AEF6A /* NSArray+descValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+descValues.m"; sourceTree = "<group>"; };
 		A8AFA95C186DFF70001AEF6A /* NSMutableArray+pieEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+pieEx.h"; sourceTree = "<group>"; };
@@ -130,6 +141,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		877D1D2D193D996D0040AB4A /* Example4 */ = {
+			isa = PBXGroup;
+			children = (
+				877D1D2F193D99DC0040AB4A /* Example4PieView.m */,
+				877D1D30193D99DC0040AB4A /* MyPieElemntExample4.h */,
+				877D1D31193D99DC0040AB4A /* MyPieElemntExample4.m */,
+				877D1D32193D99DC0040AB4A /* Example4Controller.h */,
+				877D1D33193D99DC0040AB4A /* Example4Controller.m */,
+				877D1D34193D99DC0040AB4A /* Example4Controller.xib */,
+				877D1D2E193D99C80040AB4A /* Example4PieView.h */,
+			);
+			name = Example4;
+			sourceTree = "<group>";
+		};
 		A8AFA914186B6202001AEF6A /* Help */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +270,7 @@
 		BD0CFE5D17F94CC60038FBC1 /* MagicPie */ = {
 			isa = PBXGroup;
 			children = (
+				877D1D2D193D996D0040AB4A /* Example4 */,
 				BD092F5F1807E1B500E1C0E6 /* MagicPieLayer */,
 				A8AFA95F1871FD94001AEF6A /* Example1 */,
 				A8AFA9651872058C001AEF6A /* Example2 */,
@@ -374,6 +400,7 @@
 				A8C814C2188B0BDD00D71B88 /* sample.m4a in Resources */,
 				A8C814BA188B00F300D71B88 /* Example3Controller.xib in Resources */,
 				BD0CFE7017F94CC60038FBC1 /* Images.xcassets in Resources */,
+				877D1D38193D99DC0040AB4A /* Example4Controller.xib in Resources */,
 				BDD303C618052C5A00380FBA /* Example1Controller.xib in Resources */,
 				A8AFA9641871FEB4001AEF6A /* ViewController.xib in Resources */,
 				BD0CFE6217F94CC60038FBC1 /* InfoPlist.strings in Resources */,
@@ -403,6 +430,8 @@
 				A8AFA96F1872081D001AEF6A /* Example2Controller.m in Sources */,
 				BD0CFE6E17F94CC60038FBC1 /* Example1Controller.m in Sources */,
 				A8C814C5188B0C8700D71B88 /* Example3PieView.m in Sources */,
+				877D1D35193D99DC0040AB4A /* Example4PieView.m in Sources */,
+				877D1D36193D99DC0040AB4A /* MyPieElemntExample4.m in Sources */,
 				A8AFA9631871FEB4001AEF6A /* ViewController.m in Sources */,
 				BD0CFE6817F94CC60038FBC1 /* AppDelegate.m in Sources */,
 				BD0CFEEC17FE98150038FBC1 /* TestPieLayer.m in Sources */,
@@ -413,6 +442,7 @@
 				A8AFA968187205AA001AEF6A /* Example2PieView.m in Sources */,
 				A8BB7718188B9D2E00A90439 /* Example3PieLayer.m in Sources */,
 				BD0CFE6417F94CC60038FBC1 /* main.m in Sources */,
+				877D1D37193D99DC0040AB4A /* Example4Controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
