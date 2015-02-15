@@ -10,6 +10,7 @@
 #import "Example1Controller.h"
 #import "Example2Controller.h"
 #import "Example3Controller.h"
+#import <MagicPie-Swift.h>
 
 @interface ViewController ()
 
@@ -41,19 +42,25 @@
 - (IBAction)example1Pressed:(id)sender
 {
     Example1Controller* exContr = [Example1Controller new];
-    [self presentModalViewController:exContr animated:YES];
+    [self presentViewController:exContr animated:true completion:nil];
 }
 
 - (IBAction)example2Pressed:(id)sender
 {
     Example2Controller* exContr = [Example2Controller new];
-    [self presentModalViewController:exContr animated:YES];
+    [self presentViewController:exContr animated:true completion:nil];
 }
 
 - (IBAction)example3Pressed:(id)sender
 {
     Example3Controller* exContr = [Example3Controller new];
-    [self presentModalViewController:exContr animated:YES];
+    [self presentViewController:exContr animated:true completion:nil];
+}
+
+- (IBAction)example4Pressed:(id)sender
+{
+    Example4Controller* exContr = [[Example4Controller alloc] initWithNibName:@"Example4Controller" bundle:nil];
+    [self presentViewController:exContr animated:true completion:nil];
 }
 
 @end
