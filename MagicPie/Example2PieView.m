@@ -76,9 +76,10 @@
     
     if(tappedElem.centrOffset > 0)
         tappedElem = nil;
+    
     [PieElement animateChanges:^{
         for(PieElement* elem in self.layer.values){
-            elem.centrOffset = tappedElem==elem? 20 : 0;
+            elem.maxRadius = tappedElem==elem? 120 : 100;
         }
     }];
 }
