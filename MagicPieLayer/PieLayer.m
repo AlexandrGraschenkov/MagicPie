@@ -157,6 +157,9 @@ static NSString * const _animationValuesKey = @"animationValues";
 {
     NSAssert2(array.count == indexes.count, @"Array sizes must be equal: values.count = %d; indexes.count = %d;", (int)array.count, (int)indexes.count);
     for(PieElement* elem in array){
+        if (!elem.maxRadius) {
+            elem.maxRadius = self.maxRadius;
+        }
         [elem addedToPieLayer:self];
     }
     
@@ -469,11 +472,17 @@ static NSString * const _animationValuesKey = @"animationValues";
     BOOL clockWise = self.startAngle > self.endAngle;
     
     for(PieElement* elem in values){
+        
+        float maxRadius = self.maxRadius;
+        if (elem.maxRadius) {
+            maxRadius = elem.maxRadius;
+        }
+        
         float angleEnd = angleStart + angleInterval * elem.val / sum;
         float centrAngle = (angleEnd + angleStart) * 0.5;
         CGPoint centrWithOffset = elem.centrOffset > 0? CGPointMake(cosf(centrAngle) * elem.centrOffset + centr.x, sinf(centrAngle) * elem.centrOffset + centr.y) : centr;
         CGPoint minRadiusStart = CGPointMake(centrWithOffset.x + self.minRadius*cosf(angleStart), centrWithOffset.y + self.minRadius*sinf(angleStart));
-        CGPoint maxRadiusEnd = CGPointMake(centrWithOffset.x + self.maxRadius*cosf(angleEnd), centrWithOffset.y + self.maxRadius*sinf(angleEnd));
+        CGPoint maxRadiusEnd = CGPointMake(centrWithOffset.x + maxRadius*cosf(angleEnd), centrWithOffset.y + maxRadius*sinf(angleEnd));
         
         CGContextSaveGState(ctx);
         
@@ -481,7 +490,7 @@ static NSString * const _animationValuesKey = @"animationValues";
         CGContextMoveToPoint(ctx, minRadiusStart.x, minRadiusStart.y);
         CGContextAddArc(ctx, centrWithOffset.x, centrWithOffset.y, self.minRadius, angleStart, angleEnd, clockWise);
         CGContextAddLineToPoint(ctx, maxRadiusEnd.x, maxRadiusEnd.y);
-        CGContextAddArc(ctx, centrWithOffset.x, centrWithOffset.y, self.maxRadius, angleEnd, angleStart, !clockWise);
+        CGContextAddArc(ctx, centrWithOffset.x, centrWithOffset.y, maxRadius, angleEnd, angleStart, !clockWise);
         CGContextClosePath(ctx);
         CGContextClip(ctx);
         

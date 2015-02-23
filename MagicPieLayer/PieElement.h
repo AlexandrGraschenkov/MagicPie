@@ -34,6 +34,7 @@
 + (void)animateChanges:(void(^)())changesBlock;
 
 @property (nonatomic, assign) float val;
+@property (nonatomic, assign) float maxRadius;
 @property (nonatomic, strong) UIColor* color;
 @property (nonatomic, assign) float centrOffset;
 @property (nonatomic, assign) BOOL showTitle;//default NO

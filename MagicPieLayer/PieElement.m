@@ -68,6 +68,7 @@ static BOOL animateChanges;
     _centrOffset = elem.centrOffset;
     _showTitle = elem.showTitle;
     _titleAlpha = elem.titleAlpha;
+    _maxRadius = elem.maxRadius;
 }
 
 - (NSString*)description
@@ -93,7 +94,8 @@ static BOOL animateChanges;
         PieElement* newElem = [self copy];
         newElem.val_ = (anotherElement.val - self.val) * v + self.val;
         newElem.color_ = newColor;
-        [newElem setCentrOffset_: (anotherElement.centrOffset - self.centrOffset) * v + self.centrOffset];
+        newElem.maxRadius_ = (anotherElement.maxRadius - self.maxRadius) * v + self.maxRadius;
+        newElem.centrOffset_ = (anotherElement.centrOffset - self.centrOffset) * v + self.centrOffset;
         newElem.titleAlpha = (anotherElement.titleAlpha - _titleAlpha) * v + _titleAlpha;
         newElem.showTitle = self.showTitle;
         [result addObject:newElem];
@@ -198,6 +200,26 @@ static BOOL animateChanges;
     if(!animateChanges){
         [self notifyUpdated];
     }
+}
+
+- (void)setMaxRadius:(float)maxRadius
+{
+    if(_maxRadius == maxRadius)
+        return;
+    
+    if(animateChanges){
+        [self notifyPerformForAnimation];
+    }
+    
+    _maxRadius = maxRadius;
+    
+    if(!animateChanges){
+        [self notifyUpdated];
+    }
+}
+- (void)setMaxRadius_:(float)maxRadius
+{
+    _maxRadius = maxRadius;
 }
 
 #pragma mark - Helpers
