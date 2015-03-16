@@ -9,7 +9,9 @@
 #import "Example2PieView.h"
 #import "MagicPieLayer.h"
 
-@interface Example2PieView ()
+@interface Example2PieView () {
+    NSInteger selectedIdx;
+}
 @end
 
 @implementation Example2PieView
@@ -51,6 +53,8 @@
     self.layer.maxRadius = 100;
     self.layer.minRadius = 20;
     self.layer.animationDuration = 0.6;
+    self.layer.startAngle = 360;
+    self.layer.endAngle = 0;
     self.layer.showTitles = ShowTitlesIfEnable;
     if ([self.layer.self respondsToSelector:@selector(setContentsScale:)])
     {
@@ -64,6 +68,12 @@
     [self addGestureRecognizer:tap];
 }
 
+- (void)setCenterDisplace:(BOOL)centerDisplace {
+    _centerDisplace = centerDisplace;
+    
+    [self animateChanges];
+}
+
 - (void)handleTap:(UITapGestureRecognizer*)tap
 {
     if(tap.state != UIGestureRecognizerStateEnded)
@@ -73,12 +83,24 @@
     PieElement* tappedElem = [self.layer pieElemInPoint:pos];
     if(!tappedElem)
         return;
+    NSInteger newIdx = [self.layer.values indexOfObject:tappedElem];
+    if (newIdx == selectedIdx) {
+        selectedIdx = NSNotFound;
+    } else {
+        selectedIdx = newIdx;
+    }
     
-    if(tappedElem.centrOffset > 0)
-        tappedElem = nil;
+    [self animateChanges];
+}
+
+- (void)animateChanges
+{
     [PieElement animateChanges:^{
+        NSInteger i = 0;
         for(PieElement* elem in self.layer.values){
-            elem.centrOffset = tappedElem==elem? 20 : 0;
+            elem.centrOffset = (i==selectedIdx && _centerDisplace) ? 20 : 0;
+            elem.maxRadius = (i==selectedIdx && !_centerDisplace) ? @(120) : nil;
+            i++;
         }
     }];
 }

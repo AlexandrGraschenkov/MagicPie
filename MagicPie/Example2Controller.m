@@ -67,6 +67,10 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (IBAction)centerOffsetSwitchChanged:(UISegmentedControl *)sender {
+    self.pieView.centerDisplace = sender.selectedSegmentIndex == 0;
+}
+
 - (IBAction)randomValuesPressed:(id)sender
 {
     [PieElement animateChanges:^{

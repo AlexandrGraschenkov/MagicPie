@@ -55,6 +55,6 @@ typedef enum ShowTitles
 - (PieElement*)pieElemInPoint:(CGPoint)point;
 
 //you can redefine draw elements
-- (void)drawElement:(PieElement*)elem context:(CGContextRef)ctx;
+- (void)drawElement:(PieElement*)elem path:(CGPathRef)path context:(CGContextRef)ctx;
 
 @end

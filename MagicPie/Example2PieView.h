@@ -11,7 +11,7 @@
 @class PieLayer;
 
 @interface Example2PieView : UIView
-
+@property (nonatomic, assign) BOOL centerDisplace;
 @end
 
 @interface Example2PieView (ex)

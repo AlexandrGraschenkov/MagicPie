@@ -38,4 +38,7 @@
 @property (nonatomic, assign) float centrOffset;
 @property (nonatomic, assign) BOOL showTitle;//default NO
 
+@property (nonatomic, strong) NSNumber *maxRadius; //default nil, use max/min radius of layer
+@property (nonatomic, strong) NSNumber *minRadius;
+
 @end

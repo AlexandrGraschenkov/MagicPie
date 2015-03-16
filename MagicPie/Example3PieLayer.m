@@ -11,15 +11,19 @@
 @implementation Example3PieLayer
 @dynamic colorsArr, enableCustomDrawing;
 
-- (void)drawElement:(PieElement *)elem context:(CGContextRef)ctx
+- (void)drawElement:(PieElement*)elem path:(CGPathRef)path context:(CGContextRef)ctx
 {
     if(!self.enableCustomDrawing){
-        [super drawElement:elem context:ctx];
+        [super drawElement:elem path:path context:ctx];
         return;
     }
     
     if(self.colorsArr == 0)
         return;
+    
+    CGContextSaveGState(ctx);
+    CGContextAddPath(ctx, path);
+    CGContextClip(ctx);
     
     float const indent = 3.0;
     CGPoint centr = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
@@ -32,14 +36,13 @@
     
     CGContextSetLineWidth(ctx, levelWidth);
     for(UIColor* color in self.colorsArr){
-//        if(currRadius + levelWidth > self.maxRadius)
-//            break;
         
         CGContextSetStrokeColorWithColor(ctx, color.CGColor);
         float lvlCentrRadius = currRadius + levelWidth/2.0;
         CGContextStrokeEllipseInRect(ctx, CGRectMake(centr.x - lvlCentrRadius, centr.y - lvlCentrRadius, 2*lvlCentrRadius, 2*lvlCentrRadius));
         currRadius += levelWidth + indent;
     }
+    CGContextRestoreGState(ctx);
 }
 
 @end
