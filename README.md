@@ -89,10 +89,6 @@ Delete slices:
 pieLayer.deleteValues([pieLayer.values[0], pieLayer.values[1]], animated: true)
 ```
 
-## Credits
-
-This control created for Bars Group.
-
 ## Contact
 
 Alexandr Graschenkov: alexandr.graschenkov91@gmail.com
