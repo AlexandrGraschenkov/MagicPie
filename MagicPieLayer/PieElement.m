@@ -62,6 +62,14 @@ static BOOL animateChanges;
     return result;
 }
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        _titleAlpha = 1.0;
+    }
+    return self;
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
     PieElement *another = [[[self class] allocWithZone:zone] init];

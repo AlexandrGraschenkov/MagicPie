@@ -255,10 +255,8 @@ static NSString * const _animationValuesKey = @"animationValues";
     float toSum = [[toValues valueForKeyPath:@"@sum.val"] floatValue];
     if(fromSum <= 0 || toSum <= 0){
         [self animateStartAngleEndAngleFillUp:(fromSum==0) values:fromValues timingFunction:timingFunction];
-        return;
-    }
-    
-    if(self.isFakeAngleAnimation){
+//        return;
+    } else if(self.isFakeAngleAnimation){
         [self animateFromStartAngle:[self.presentationLayer startAngle]
                        toStartAngle:self.startAngle
                        fromEndAngle:[self.presentationLayer endAngle]
@@ -531,13 +529,13 @@ static NSString * const _animationValuesKey = @"animationValues";
         NSString* text = self.transformTitleBlock? self.transformTitleBlock(elem, percent) : [NSString stringWithFormat:@"%.2f", elem.val];
         float maxRadius = elem.maxRadius ? elem.maxRadius.floatValue : self.maxRadius;
         float radius = maxRadius + elem.centrOffset;
-        [self drawText:text angle:-angle radius:radius context:ctx];
+        [self drawText:text angle:-angle radius:radius color:color context:ctx];
         
         angleStart = angleEnd;
     }
 }
 
-- (void)drawText:(NSString*)text angle:(float)angle radius:(float)radius context:(CGContextRef)ctx
+- (void)drawText:(NSString*)text angle:(float)angle radius:(float)radius color:(UIColor *)textColor context:(CGContextRef)ctx
 {
     while (angle < -M_PI_4) {
         angle += M_PI*2;
@@ -573,7 +571,7 @@ static NSString * const _animationValuesKey = @"animationValues";
 #if (__IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0)
     [text drawInRect:frame withFont:self.font];
 #else
-    [text drawInRect:frame withAttributes:@{NSFontAttributeName:self.font}];
+    [text drawInRect:frame withAttributes:@{NSFontAttributeName:self.font, NSForegroundColorAttributeName:textColor}];
 #endif
     
     UIGraphicsPopContext();
