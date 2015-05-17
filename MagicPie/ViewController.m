@@ -51,6 +51,12 @@
     [self presentViewController:exContr animated:true completion:nil];
 }
 
+- (IBAction)example2SwiftPressed:(id)sender
+{
+    Example2SwiftController* exContr = [Example2SwiftController new];
+    [self presentViewController:exContr animated:true completion:nil];
+}
+
 - (IBAction)example3Pressed:(id)sender
 {
     Example3Controller* exContr = [Example3Controller new];

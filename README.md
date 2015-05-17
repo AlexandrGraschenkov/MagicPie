@@ -31,6 +31,9 @@ Then import the main header.
 
 Have a fun!
 
+### Swift Swift Swift Swift Swift
+Okay, now when you are reading this, I recommend to you look the example #2 in Swift.
+
 ## Example Usage
 
 Create pie:

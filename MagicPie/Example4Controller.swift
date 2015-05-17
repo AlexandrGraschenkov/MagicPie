@@ -40,7 +40,7 @@ class Example4PieView : UIView {
     }
     
     private var pieLayer: PieLayer {
-        return layer as PieLayer
+        return layer as! PieLayer
     }
     
     override func awakeFromNib() {
@@ -77,18 +77,18 @@ class Example4PieView : UIView {
                     while val > 1.0 {
                         val -= 1.0
                     }
-                    let elem1 = self.pieLayer.values[i] as PieElement
+                    let elem1 = self.pieLayer.values[i] as! PieElement
                     let brigtness = CGFloat(sin(val * 2 * Float(M_PI))) * 0.25 + 0.5
                     var color1 = UIColor(hue: (CGFloat(i) / CGFloat(count)), saturation: 0.5, brightness: brigtness, alpha: 1.0)
                     elem1.color = color1
                     
                     let i2 = count - i - 1
-                    let elem2 = self.pieLayer.values[i2] as PieElement
+                    let elem2 = self.pieLayer.values[i2] as! PieElement
                     var color2 = UIColor(hue: (CGFloat(i2) / CGFloat(count)), saturation: 0.8, brightness: brigtness, alpha: 1.0)
                     elem2.color = color2
                 }
             } else {
-                for elem in self.pieLayer.values as [PieElement] {
+                for elem in self.pieLayer.values as! [PieElement] {
                     elem.color = self.waveColor
                 }
             }

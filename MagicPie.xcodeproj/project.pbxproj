@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A86AF37B1B09099600A5C975 /* PieView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86AF37A1B09099600A5C975 /* PieView2.swift */; };
+		A86AF37D1B091C3300A5C975 /* PieElement2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86AF37C1B091C3300A5C975 /* PieElement2.swift */; };
+		A86AF37F1B091C7000A5C975 /* Example2SwiftController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86AF37E1B091C7000A5C975 /* Example2SwiftController.swift */; };
+		A86AF3811B0920FB00A5C975 /* Example2SwiftController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A86AF3801B0920FB00A5C975 /* Example2SwiftController.xib */; };
 		A8878AC41A9073F5006ED249 /* Example4Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8878AC31A9073F5006ED249 /* Example4Controller.swift */; };
 		A8AFA913186B6138001AEF6A /* NSArray+descValues.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA912186B6138001AEF6A /* NSArray+descValues.m */; };
 		A8AFA95E186DFF70001AEF6A /* NSMutableArray+pieEx.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AFA95D186DFF70001AEF6A /* NSMutableArray+pieEx.m */; };
@@ -54,6 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A86AF37A1B09099600A5C975 /* PieView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieView2.swift; sourceTree = "<group>"; };
+		A86AF37C1B091C3300A5C975 /* PieElement2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieElement2.swift; sourceTree = "<group>"; };
+		A86AF37E1B091C7000A5C975 /* Example2SwiftController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example2SwiftController.swift; sourceTree = "<group>"; };
+		A86AF3801B0920FB00A5C975 /* Example2SwiftController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example2SwiftController.xib; sourceTree = "<group>"; };
 		A8878AC21A9073F5006ED249 /* MagicPie-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MagicPie-Bridging-Header.h"; sourceTree = "<group>"; };
 		A8878AC31A9073F5006ED249 /* Example4Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example4Controller.swift; sourceTree = "<group>"; };
 		A8AFA911186B6138001AEF6A /* NSArray+descValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+descValues.h"; sourceTree = "<group>"; };
@@ -135,6 +143,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A86AF3791B0908A100A5C975 /* Example 2(Swift) */ = {
+			isa = PBXGroup;
+			children = (
+				A86AF37A1B09099600A5C975 /* PieView2.swift */,
+				A86AF37C1B091C3300A5C975 /* PieElement2.swift */,
+				A86AF37E1B091C7000A5C975 /* Example2SwiftController.swift */,
+				A86AF3801B0920FB00A5C975 /* Example2SwiftController.xib */,
+			);
+			name = "Example 2(Swift)";
+			sourceTree = "<group>";
+		};
 		A8878AC11A9073B2006ED249 /* Example4(Swift) */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +282,7 @@
 				BD092F5F1807E1B500E1C0E6 /* MagicPieLayer */,
 				A8AFA95F1871FD94001AEF6A /* Example1 */,
 				A8AFA9651872058C001AEF6A /* Example2 */,
+				A86AF3791B0908A100A5C975 /* Example 2(Swift) */,
 				A8C814B5188B00CC00D71B88 /* Example3 */,
 				A8878AC11A9073B2006ED249 /* Example4(Swift) */,
 				BD0CFE6617F94CC60038FBC1 /* AppDelegate.h */,
@@ -391,6 +411,7 @@
 				A8C814BA188B00F300D71B88 /* Example3Controller.xib in Resources */,
 				BD0CFE7017F94CC60038FBC1 /* Images.xcassets in Resources */,
 				A8B77B0A1A90A75F00F394CE /* Example4Controller.xib in Resources */,
+				A86AF3811B0920FB00A5C975 /* Example2SwiftController.xib in Resources */,
 				BDD303C618052C5A00380FBA /* Example1Controller.xib in Resources */,
 				A8AFA9641871FEB4001AEF6A /* ViewController.xib in Resources */,
 				BD0CFE6217F94CC60038FBC1 /* InfoPlist.strings in Resources */,
@@ -419,13 +440,16 @@
 				A8AFA913186B6138001AEF6A /* NSArray+descValues.m in Sources */,
 				A8AFA96F1872081D001AEF6A /* Example2Controller.m in Sources */,
 				BD0CFE6E17F94CC60038FBC1 /* Example1Controller.m in Sources */,
+				A86AF37F1B091C7000A5C975 /* Example2SwiftController.swift in Sources */,
 				A8C814C5188B0C8700D71B88 /* Example3PieView.m in Sources */,
 				A8AFA9631871FEB4001AEF6A /* ViewController.m in Sources */,
+				A86AF37B1B09099600A5C975 /* PieView2.swift in Sources */,
 				BD0CFE6817F94CC60038FBC1 /* AppDelegate.m in Sources */,
 				BD0CFEEC17FE98150038FBC1 /* TestPieLayer.m in Sources */,
 				BD092F0C1806D09000E1C0E6 /* Example1PieView.m in Sources */,
 				A8878AC41A9073F5006ED249 /* Example4Controller.swift in Sources */,
 				A8C814CC188B175200D71B88 /* MetrtTable.m in Sources */,
+				A86AF37D1B091C3300A5C975 /* PieElement2.swift in Sources */,
 				A8C814B9188B00F300D71B88 /* Example3Controller.m in Sources */,
 				BDCDD2B318268B8E0006C638 /* PieElement.m in Sources */,
 				A8AFA968187205AA001AEF6A /* Example2PieView.m in Sources */,
