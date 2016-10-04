@@ -48,7 +48,7 @@ extern NSString * const pieElementAnimateChangesNotificationIdentifier;
 static NSString * const _animationValuesKey = @"animationValues";
 
 #pragma mark - PieLayer
-@interface PieLayer ()
+@interface PieLayer () <CAAnimationDelegate>
 {
     BOOL _isNotCopyForAnimation;
 }
