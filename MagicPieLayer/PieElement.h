@@ -31,7 +31,7 @@
 
 + (instancetype _Nonnull)pieElementWithValue:(float)val color:(UIColor*_Nonnull)color;
 
-+ (void)animateChanges:(void(^_Nonnull)())changesBlock;
++ (void)animateChanges:(void(^_Nonnull)(void))changesBlock;
 
 @property (nonatomic, assign) float val;
 @property (nonatomic, strong) UIColor* _Nonnull color;

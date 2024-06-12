@@ -94,7 +94,7 @@ static BOOL animateChanges;
     return [NSString stringWithFormat:@"[%@: %f]", NSStringFromClass(self.class), self.val];
 }
 
-+ (void)animateChanges:(void (^)())changesBlock
++ (void)animateChanges:(void (^)(void))changesBlock
 {
     magicPie_runOnMainQueue(^{
         animateChanges = YES;
