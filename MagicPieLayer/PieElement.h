@@ -3,7 +3,7 @@
 // MagicPie
 //
 // Created by Alexandr on 03.11.13.
-// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
+// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/AlexandrGraschenkov )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,16 +29,16 @@
 
 @interface PieElement : NSObject <NSCopying>
 
-+ (instancetype)pieElementWithValue:(float)val color:(UIColor*)color;
++ (instancetype _Nonnull)pieElementWithValue:(float)val color:(UIColor*_Nonnull)color;
 
-+ (void)animateChanges:(void(^)())changesBlock;
++ (void)animateChanges:(void(^_Nonnull)())changesBlock;
 
 @property (nonatomic, assign) float val;
-@property (nonatomic, strong) UIColor* color;
+@property (nonatomic, strong) UIColor* _Nonnull color;
 @property (nonatomic, assign) float centrOffset;
 @property (nonatomic, assign) BOOL showTitle;//default NO
 
-@property (nonatomic, strong) NSNumber *maxRadius; //default nil, use max/min radius of layer
-@property (nonatomic, strong) NSNumber *minRadius;
+@property (nonatomic, strong) NSNumber * _Nullable maxRadius; //default nil, use max/min radius of layer
+@property (nonatomic, strong) NSNumber * _Nullable minRadius;
 
 @end

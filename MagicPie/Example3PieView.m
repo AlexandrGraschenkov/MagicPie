@@ -7,7 +7,7 @@
 //
 
 #import "Example3PieView.h"
-#import "MagicPieLayer.h"
+#import "MagicPie.h"
 #import "MetrtTable.h"
 #import "Example3PieLayer.h"
 @import AVFoundation;
@@ -19,7 +19,7 @@
     PieElement* pieElem;
     MeterTable* meterTable;
 }
-@property(nonatomic,readonly,retain) Example3PieLayer *layer;
+@property(nonatomic,readonly,retain) Example3PieLayer *pieLayer;
 @end
 
 @implementation Example3PieView
@@ -27,6 +27,10 @@
 + (Class)layerClass
 {
     return [Example3PieLayer class];
+}
+
+- (Example3PieLayer *)pieLayer {
+    return (Example3PieLayer *)self.layer;
 }
 
 - (id)init
@@ -67,16 +71,16 @@
 
 - (void)setup
 {
-    self.layer.maxRadius = 40;
-    self.layer.minRadius = 40;
-    self.layer.animationDuration = 1.0;
-    self.layer.colorsArr = @[[UIColor colorWithRed:0.472 green:0.652 blue:1.000 alpha:1.000],
+    self.pieLayer.maxRadius = 40;
+    self.pieLayer.minRadius = 40;
+    self.pieLayer.animationDuration = 1.0;
+    self.pieLayer.colorsArr = @[[UIColor colorWithRed:0.472 green:0.652 blue:1.000 alpha:1.000],
                              [UIColor colorWithRed:0.529 green:0.392 blue:1.000 alpha:1.000],
                              [UIColor colorWithRed:0.710 green:0.214 blue:0.814 alpha:1.000],
                              [UIColor colorWithRed:0.896 green:0.256 blue:0.556 alpha:1.000],
                              [UIColor colorWithRed:0.798 green:0.000 blue:0.000 alpha:1.000]];
     pieElem = [PieElement pieElementWithValue:1 color:[self randomColor]];
-    [self.layer addValues:@[pieElem] animated:NO];
+    [self.pieLayer addValues:@[pieElem] animated:NO];
     
     meterTable = [MeterTable new];
     displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
@@ -90,12 +94,12 @@
 
 - (void)setEnableCustomDrawing:(BOOL)enableCustomDrawing
 {
-    self.layer.enableCustomDrawing = enableCustomDrawing;
+    self.pieLayer.enableCustomDrawing = enableCustomDrawing;
 }
 
 - (BOOL)enableCustomDrawing
 {
-    return self.layer.enableCustomDrawing;
+    return self.pieLayer.enableCustomDrawing;
 }
 
 // helpfull tutorial http://www.raywenderlich.com/36475/how-to-make-a-music-visualizer-in-ios
@@ -111,7 +115,7 @@
         power /= [_player numberOfChannels];
         
         float level = [meterTable valueAt:power];
-        self.layer.maxRadius = self.layer.minRadius + 120*level;
+        self.pieLayer.maxRadius = self.pieLayer.minRadius + 120*level;
     }
 }
 

@@ -13,9 +13,9 @@ class Example2SwiftController: UIViewController {
     init() {
         super.init(nibName: "Example2SwiftController", bundle: nil)
     }
-
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     @IBOutlet weak var pieView: PieView2!
@@ -24,7 +24,7 @@ class Example2SwiftController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        for (var year = 2009; year <= 2014; year++) {
+        for year in 2009..<2014 {
             let elem = PieElement2(value: Float(5+arc4random()%8), color:randColor())
             elem.title = "\(year) year"
             pieView.pieLayer.addValues([elem], animated: false)
@@ -34,11 +34,11 @@ class Example2SwiftController: UIViewController {
     
     func updatePieDisplay() {
         if showPercent {
-            pieView.pieLayer.transformTitleBlock = { (elem: PieElement!, percent: Float) -> String! in
+            pieView.pieLayer.transformTitleBlock = { (elem: PieElement!, percent: Float) -> String in
                 return "\(Int(percent)) %"
             }
         } else {
-            pieView.pieLayer.transformTitleBlock = { (elem: PieElement!, percent: Float) -> String! in
+            pieView.pieLayer.transformTitleBlock = { (elem: PieElement!, percent: Float) -> String in
                 return (elem as! PieElement2).title ?? "Unknown"
             }
         }
@@ -52,7 +52,7 @@ class Example2SwiftController: UIViewController {
     }
     
     @IBAction func backPressed() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func changePercentValuesPressed() {
@@ -62,7 +62,7 @@ class Example2SwiftController: UIViewController {
     
     @IBAction func randomValuesPressed() {
         PieElement.animateChanges {
-            for elem in self.pieView.pieLayer.values as! [PieElement] {
+            for elem in self.pieView.pieLayer.values {
                 elem.val = 5 + Float(arc4random()%8)
             }
         }
@@ -70,7 +70,7 @@ class Example2SwiftController: UIViewController {
     
     @IBAction func randomColorPressed() {
         PieElement.animateChanges {
-            for elem in self.pieView.pieLayer.values as! [PieElement] {
+            for elem in self.pieView.pieLayer.values {
                 elem.color = self.randColor()
             }
         }

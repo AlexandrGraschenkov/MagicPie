@@ -3,7 +3,7 @@
 // MagicPie
 //
 // Created by Alexander on 27.12.13.
-// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
+// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/AlexandrGraschenkov )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal

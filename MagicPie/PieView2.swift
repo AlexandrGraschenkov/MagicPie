@@ -10,7 +10,7 @@ import UIKit
 
 class PieView2: UIView {
     
-    override class func layerClass() -> AnyClass {
+    override class var layerClass: AnyClass {
         return PieLayer.self
     }
     
@@ -34,21 +34,21 @@ class PieView2: UIView {
         pieLayer.endAngle = 0
         pieLayer.showTitles = ShowTitlesAlways
         
-        let tap = UITapGestureRecognizer(target: self, action: "handleTap:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(tap:)))
         tap.numberOfTapsRequired = 1
         tap.numberOfTouchesRequired = 1
         self.addGestureRecognizer(tap)
     }
     
-    func handleTap(tap: UITapGestureRecognizer) {
-        if tap.state != UIGestureRecognizerState.Ended {
+    @objc private func handleTap(tap: UITapGestureRecognizer) {
+        if tap.state != .ended {
             return
         }
         
-        let pos = tap.locationInView(tap.view)
+        let pos = tap.location(in: tap.view)
         
-        if let tappedElem = pieLayer.pieElemInPoint(pos) {
-            let newIdx = find(pieLayer.values as! [PieElement], tappedElem)
+        if let tappedElem = pieLayer.pieElem(in: pos) {
+            let newIdx = pieLayer.values.firstIndex(of: tappedElem)
             if newIdx == selectedIdx {
                 selectedIdx = nil
             } else {
@@ -61,8 +61,7 @@ class PieView2: UIView {
     
     private func animateChanges() {
         PieElement.animateChanges {
-            for (idx, obj) in enumerate(self.pieLayer.values) {
-                let elem = obj as! PieElement
+            for (idx, elem) in self.pieLayer.values.enumerated() {
                 elem.centrOffset = idx == self.selectedIdx ? 20 : 0
             }
         }

@@ -115,7 +115,7 @@
 		BD0CFEEB17FE98150038FBC1 /* TestPieLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPieLayer.m; sourceTree = "<group>"; };
 		BDCDD2B118268B8E0006C638 /* PieElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieElement.h; sourceTree = "<group>"; };
 		BDCDD2B218268B8E0006C638 /* PieElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieElement.m; sourceTree = "<group>"; };
-		BDCDD2B418268D400006C638 /* MagicPieLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MagicPieLayer.h; sourceTree = "<group>"; };
+		BDCDD2B418268D400006C638 /* MagicPie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MagicPie.h; sourceTree = "<group>"; };
 		BDD303C518052C5A00380FBA /* Example1Controller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Example1Controller.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,7 +226,7 @@
 		BD092F5F1807E1B500E1C0E6 /* MagicPieLayer */ = {
 			isa = PBXGroup;
 			children = (
-				BDCDD2B418268D400006C638 /* MagicPieLayer.h */,
+				BDCDD2B418268D400006C638 /* MagicPie.h */,
 				BD092F601807E1B500E1C0E6 /* PieLayer.h */,
 				BD092F611807E1B500E1C0E6 /* PieLayer.m */,
 				A8AFA95C186DFF70001AEF6A /* NSMutableArray+pieEx.h */,
@@ -388,6 +388,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -581,12 +582,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MagicPie/MagicPie-Prefix.pch";
 				INFOPLIST_FILE = "MagicPie/MagicPie-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MagicPie/MagicPie-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -604,11 +606,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MagicPie/MagicPie-Prefix.pch";
 				INFOPLIST_FILE = "MagicPie/MagicPie-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MagicPie/MagicPie-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

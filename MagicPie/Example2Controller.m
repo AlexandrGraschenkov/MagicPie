@@ -64,7 +64,7 @@
 
 - (IBAction)backPressed:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)centerOffsetSwitchChanged:(UISegmentedControl *)sender {

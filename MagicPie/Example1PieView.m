@@ -7,7 +7,7 @@
 //
 
 #import "Example1PieView.h"
-#import "MagicPieLayer.h"
+#import "MagicPie.h"
 
 @interface Example1PieView ()
 {

@@ -7,7 +7,7 @@
 //
 
 #import "Example1Controller.h"
-#import "MagicPieLayer.h"
+#import "MagicPie.h"
 #import "TestPieLayer.h"
 #import "Example1PieView.h"
 #import "NSMutableArray+pieEx.h"
@@ -42,7 +42,7 @@
 
 - (IBAction)backPressed:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 - (IBAction)addPressed:(id)sender

@@ -2,7 +2,7 @@
 // PieLayer.h
 // MagicPie
 //
-// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/Sk0rpion )
+// Copyright (c) 2013 Alexandr Graschenkov ( https://github.com/AlexandrGraschenkov )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,10 @@ typedef enum ShowTitles
 @class PieElement;
 @interface PieLayer : CALayer
 
-@property (nonatomic, strong, readonly) NSArray* values;
-- (void)addValues:(NSArray*)addingNewValues animated:(BOOL)animated;
-- (void)deleteValues:(NSArray*)valuesToDelete animated:(BOOL)animated;
-- (void)insertValues:(NSArray *)array atIndexes:(NSArray*)indexes animated:(BOOL)animated;
+@property (nonatomic, strong, readonly) NSArray<PieElement *>* _Nonnull values;
+- (void)addValues:(NSArray<PieElement*>*_Nonnull)addingNewValues animated:(BOOL)animated;
+- (void)deleteValues:(NSArray<PieElement *>*_Nonnull)valuesToDelete animated:(BOOL)animated;
+- (void)insertValues:(NSArray<PieElement *>*_Nonnull)array atIndexes:(NSArray*_Nonnull)indexes animated:(BOOL)animated;
 
 @property (nonatomic, assign) float maxRadius;//default 100
 @property (nonatomic, assign) float minRadius;//default 0
@@ -47,14 +47,14 @@ typedef enum ShowTitles
 @property (nonatomic, assign) float animationDuration;//default 0.6
 @property (nonatomic, assign) ShowTitle showTitles;//defaul ShowTitleNever
 
-@property (nonatomic, copy) NSString*(^transformTitleBlock)(PieElement* val, float percent);
+@property (nonatomic, copy) NSString* _Nonnull (^ _Nullable transformTitleBlock) (PieElement*_Nonnull val, float percent);
 
 - (void)setMaxRadius:(float)maxRadius minRadius:(float)minRadius animated:(BOOL)isAnimated;
 - (void)setStartAngle:(float)startAngle endAngle:(float)endAngle animated:(BOOL)isAnimated;
 
-- (PieElement*)pieElemInPoint:(CGPoint)point;
+- (PieElement* _Nullable)pieElemInPoint:(CGPoint)point;
 
 //you can redefine draw elements
-- (void)drawElement:(PieElement*)elem path:(CGPathRef)path context:(CGContextRef)ctx;
+- (void)drawElement:(PieElement*_Nonnull)elem path:(CGPathRef _Nonnull )path context:(CGContextRef _Nonnull )ctx;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "Example2PieView.h"
-#import "MagicPieLayer.h"
+#import "MagicPie.h"
 
 @interface Example2PieView () {
     NSInteger selectedIdx;

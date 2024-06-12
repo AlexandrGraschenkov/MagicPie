@@ -16,11 +16,10 @@ import Foundation
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println(pie)
     }
     
     @IBAction func backPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func start() {
@@ -35,7 +34,7 @@ import Foundation
 
 class Example4PieView : UIView {
     
-    override class func layerClass() -> AnyClass {
+    override class var layerClass: AnyClass {
         return PieLayer.self
     }
     
@@ -49,20 +48,20 @@ class Example4PieView : UIView {
     }
     
     private func commonInit() {
-        let elems = (0...200).map({ _ in PieElement(value: 1.0, color: self.waveColor) })
-        pieLayer.addValues(elems, animated: false)
+        let elements: [PieElement] = (0...200).map({ _ in PieElement(value: 1.0, color: self.waveColor) })
+        pieLayer.addValues(elements, animated: false)
         pieLayer.maxRadius = 150
         pieLayer.minRadius = 20
     }
     
-    var waveColor = UIColor.lightGrayColor()
+    var waveColor = UIColor.lightGray
     private var phase: Float = 0
-    private var timer: NSTimer?
+    private var timer: Timer?
     
-    func updatePhaseAnimated() {
-        updatePhaseAnimated(0.05)
+    @objc private func updatePhaseAnimated() {
+        updatePhaseAnimatedWith(duration: 0.05)
     }
-    private func updatePhaseAnimated(duration: Float) {
+    private func updatePhaseAnimatedWith(duration: Float) {
         phase += 0.1
         if phase > 1 { phase -= 1 }
         let waveLengthElemCount = 10
@@ -77,31 +76,26 @@ class Example4PieView : UIView {
                     while val > 1.0 {
                         val -= 1.0
                     }
-                    let elem1 = self.pieLayer.values[i] as! PieElement
-                    let brigtness = CGFloat(sin(val * 2 * Float(M_PI))) * 0.25 + 0.5
-                    var color1 = UIColor(hue: (CGFloat(i) / CGFloat(count)), saturation: 0.5, brightness: brigtness, alpha: 1.0)
+                    let elem1 = self.pieLayer.values[i]
+                    let brigtness = CGFloat(sin(val * 2 * .pi)) * 0.25 + 0.5
+                    let color1 = UIColor(hue: (CGFloat(i) / CGFloat(count)), saturation: 0.5, brightness: brigtness, alpha: 1.0)
                     elem1.color = color1
                     
                     let i2 = count - i - 1
-                    let elem2 = self.pieLayer.values[i2] as! PieElement
-                    var color2 = UIColor(hue: (CGFloat(i2) / CGFloat(count)), saturation: 0.8, brightness: brigtness, alpha: 1.0)
+                    let elem2 = self.pieLayer.values[i2]
+                    let color2 = UIColor(hue: (CGFloat(i2) / CGFloat(count)), saturation: 0.8, brightness: brigtness, alpha: 1.0)
                     elem2.color = color2
                 }
             } else {
-                for elem in self.pieLayer.values as! [PieElement] {
+                for elem in self.pieLayer.values {
                     elem.color = self.waveColor
                 }
             }
         }
     }
     
-    private func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    private func delay(_ delay: Double, closure: @escaping ()->()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: closure)
     }
     
     private var cancelAnimation: (()->())?
@@ -118,17 +112,17 @@ class Example4PieView : UIView {
             self.timer = nil
         }
         
-        updatePhaseAnimated(0.3)
+        updatePhaseAnimatedWith(duration: 0.3)
         delay(0.3) {
             if canceled { return }
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "updatePhaseAnimated", userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(self.updatePhaseAnimated), userInfo: nil, repeats: true)
         }
     }
     
     func stopWaveAnimation() {
         cancelAnimation?()
         cancelAnimation = nil
-        updatePhaseAnimated(0.4)
+        updatePhaseAnimatedWith(duration: 0.4)
     }
     
     private func colorBrightness(color: UIColor, brightness: Float) -> UIColor {

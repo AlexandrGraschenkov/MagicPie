@@ -67,7 +67,7 @@
 #pragma mark - Actions
 - (IBAction)backPressed:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)customDrawingSwitchChanged:(UISwitch*)sender

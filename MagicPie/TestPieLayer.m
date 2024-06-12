@@ -7,7 +7,7 @@
 //
 
 #import "TestPieLayer.h"
-#import "MagicPieLayer.h"
+#import "MagicPie.h"
 
 typedef enum PieAction
 {
